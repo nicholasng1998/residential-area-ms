@@ -13,5 +13,7 @@ Admin angular application:
     a. npm run start
 
 Backend-sevice application:
+1. Download STS Eclipse with link below:
+    a. https://download.springsource.com/release/STS4/4.16.1.RELEASE/dist/e4.25/spring-tool-suite-4-4.16.1.RELEASE-e4.25.0-win32.win32.x86_64.self-extracting.jar
 1. Download gradle 7.6 with link below
     a. https://gradle.org/next-steps/?version=7.6&format=bin
