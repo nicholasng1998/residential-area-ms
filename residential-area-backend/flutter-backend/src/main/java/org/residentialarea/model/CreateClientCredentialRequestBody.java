@@ -1,4 +1,4 @@
-package residentialarea.model;
+package org.residentialarea.model;
 
 import lombok.Data;
 

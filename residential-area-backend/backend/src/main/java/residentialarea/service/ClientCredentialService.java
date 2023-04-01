@@ -5,7 +5,7 @@ import residentialarea.model.CreateClientCredentialRequestBody;
 
 public interface ClientCredentialService {
 
-    String createClientCredential(CreateClientCredentialRequestBody requestBody);
+    void createClientCredential(CreateClientCredentialRequestBody requestBody) throws Exception;
 
-    ClientCredentialModel getClientCredential(String username);
+    ClientCredentialModel getClientCredential(String username) throws Exception;
 }

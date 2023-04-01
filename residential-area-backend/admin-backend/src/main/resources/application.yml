@@ -1,11 +1,9 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
-    name: flutter-backend
-  profiles:
-    active: local
+    name: residential-admin-backend
 
 # gen secret key using CustomLoginSuccessHandler#generateKey()
 jwt:
