@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import residentialarea.model.ClientCredentialModel;
-import residentialarea.model.CreateClientCredentialRequestBody;
+import residentialarea.model.ClientCredentialCreateRequestBody;
 import residentialarea.service.ClientCredentialService;
 
 @Slf4j
@@ -18,7 +18,8 @@ public class ClientCredentialRestController {
     private final ClientCredentialService clientCredentialService;
 
     @PostMapping(value = "/create")
-    public ResponseEntity<String> createClientCredential(@RequestBody CreateClientCredentialRequestBody requestBody) {
+    @SuppressWarnings("unused")
+    public ResponseEntity<String> createClientCredential(@RequestBody ClientCredentialCreateRequestBody requestBody) {
         try {
             clientCredentialService.createClientCredential(requestBody);
         } catch (Exception e) {
@@ -29,6 +30,7 @@ public class ClientCredentialRestController {
     }
 
     @GetMapping(value = "/get")
+    @SuppressWarnings("unused")
     public ResponseEntity<ClientCredentialModel> getClientCredential(@RequestParam String username) {
         ClientCredentialModel clientCredentialModel = new ClientCredentialModel();
         try {

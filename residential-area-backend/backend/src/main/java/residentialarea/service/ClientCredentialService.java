@@ -1,11 +1,11 @@
 package residentialarea.service;
 
 import residentialarea.model.ClientCredentialModel;
-import residentialarea.model.CreateClientCredentialRequestBody;
+import residentialarea.model.ClientCredentialCreateRequestBody;
 
 public interface ClientCredentialService {
 
-    void createClientCredential(CreateClientCredentialRequestBody requestBody) throws Exception;
+    void createClientCredential(ClientCredentialCreateRequestBody requestBody) throws Exception;
 
     ClientCredentialModel getClientCredential(String username) throws Exception;
 }

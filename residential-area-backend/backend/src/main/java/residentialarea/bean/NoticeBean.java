@@ -7,22 +7,27 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "CLIENT_CREDENTIAL")
-public class ClientCredentialBean {
-
+@Table(name = "NOTICE")
+public class NoticeBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
-    @Column(name = "USERNAME")
-    private String username;
+    @Column(name = "TITLE")
+    private String title;
 
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name = "MESSAGE")
+    private String message;
+
+    @Column(name = "IS_ACTIVE")
+    private String isActive;
 
     @Column(name = "CREATED_DATE")
     private Date createdDate;
+
+    @Column(name = "EXPIRY_DATE")
+    private Date expiryDate;
 
     @Column(name = "CREATED_BY")
     private String createdBy;

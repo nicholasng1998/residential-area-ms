@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import residentialarea.bean.ClientCredentialBean;
 import residentialarea.dao.ClientCredentialDao;
 import residentialarea.model.ClientCredentialModel;
-import residentialarea.model.CreateClientCredentialRequestBody;
+import residentialarea.model.ClientCredentialCreateRequestBody;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class ClientCredentialServiceImpl implements ClientCredentialService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createClientCredential(CreateClientCredentialRequestBody requestBody) throws Exception {
+    public void createClientCredential(ClientCredentialCreateRequestBody requestBody) throws Exception {
         if (!requestBody.getPassword().equals(requestBody.getConfirmPassword())) {
             log.info("Both password mismatched.");
             throw new Exception("Both password mismatched.");
