@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0aba5760-db6a-4e95-8f47-aee3af5a7bde" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/ClientBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/EmergencyRequestBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/PaymentBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/ReceiptBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/StatementBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/VisitorPassBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/constant/ClientStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/controller/ClientRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/ClientDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/EmergencyRequestDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/PaymentDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/ReceiptDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/StatementDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/dao/VisitorPassDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/model/ClientCreateRequestModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/ClientService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/ClientServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/EmergencyRequestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/EmergencyRequestServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/PaymentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/ReceiptService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/ReceiptServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/StatementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/StatementServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/VisitorPassService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/service/VisitorServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/3 PAYMENT.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/4 RECEIPT.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/5 STATEMENT.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/6 VISITOR_PASS.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/7 CLIENT.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/8 EMERGENCY_REQUEST.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/ClientCredentialBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/residential-area-backend/backend/src/main/java/residentialarea/bean/ClientCredentialBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/residential-area-backend/sql-script/1 CLIENT_CREDENTIAL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/residential-area-backend/sql-script/1 CLIENT_CREDENTIAL.sql" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2OS51Itc6ZS5Ff8LwdPuQr6mTaX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/workspace/residential-area-ms/residential-area-backend",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0aba5760-db6a-4e95-8f47-aee3af5a7bde" name="Changes" comment="" />
+      <created>1681540925324</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681540925324</updated>
+    </task>
+    <servers />
+  </component>
+</project>

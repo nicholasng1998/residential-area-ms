@@ -26,4 +26,7 @@ public class ClientCredentialBean {
 
     @Column(name = "CREATED_BY")
     private String createdBy;
+
+    @Column(name = "CLIENT_ID")
+    private int clientId;
 }
