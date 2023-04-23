@@ -1,10 +1,9 @@
-package residentialarea.model;
+package org.residentialarea.model;
 
 import lombok.Data;
 
 @Data
-public class ResidentialResponseModel {
-
+public class ResidentResponseModel {
     private Integer id;
     private String name;
     private Integer age;

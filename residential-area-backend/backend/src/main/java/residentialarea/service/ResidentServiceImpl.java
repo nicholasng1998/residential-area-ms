@@ -12,7 +12,8 @@ import residentialarea.constant.ResidentStatusEnum;
 import residentialarea.dao.ResidentCredentialDao;
 import residentialarea.dao.ResidentDao;
 import residentialarea.model.ResidentCreateRequestModel;
-import residentialarea.model.ResidentialResponseModel;
+import residentialarea.model.ResidentEditRequestModel;
+import residentialarea.model.ResidentResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,16 +45,16 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResidentialResponseModel> readResident() {
+    public List<ResidentResponseModel> readResident() {
         log.info("readResident");
         List<ResidentBean> residentBeans = residentDao.findAll();
-        List<ResidentialResponseModel> residentialResponseModels = new ArrayList<>();
+        List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
         residentBeans.forEach((residentBean -> {
-            ResidentialResponseModel residentialResponseModel = new ResidentialResponseModel();
-            BeanUtils.copyProperties(residentBean, residentialResponseModel);
-            residentialResponseModels.add(residentialResponseModel);
+            ResidentResponseModel residentResponseModel = new ResidentResponseModel();
+            BeanUtils.copyProperties(residentBean, residentResponseModel);
+            residentResponseModels.add(residentResponseModel);
         }));
-        return residentialResponseModels;
+        return residentResponseModels;
     }
 
     @Override
@@ -67,5 +68,15 @@ public class ResidentServiceImpl implements ResidentService {
 
         ResidentBean residentBean = residentDao.getOne(id);
         residentDao.delete(residentBean);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateResident(ResidentEditRequestModel residentEditRequestModel) {
+        ResidentBean residentBean = residentDao.getOne(residentEditRequestModel.getId());
+        BeanUtils.copyProperties(residentEditRequestModel, residentBean);
+        residentBean.setStatus(ResidentStatusEnum.ACTIVE.getStatus());
+        log.info("residentBean: " + residentBean);
+        residentDao.save(residentBean);
     }
 }

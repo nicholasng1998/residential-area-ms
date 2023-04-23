@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-export interface ResidentialResponseModel {
+export interface ResidentResponseModel {
   id: number;
   name: string;
   age: number;
@@ -23,13 +23,17 @@ export class ResidentService {
     return this.http.post<string>('api/protected/resident/create', requestModal);
   }
 
-  readResident(): Observable<ResidentialResponseModel[]>{
-    return this.http.get<ResidentialResponseModel[]>('api/protected/resident/read');
+  readResident(): Observable<ResidentResponseModel[]>{
+    return this.http.get<ResidentResponseModel[]>('api/protected/resident/read');
   }
 
   deleteResident(id: number): Observable<string>{
     let params = new HttpParams();
     params = params.append('id', id);
     return this.http.delete<string>('api/protected/resident/delete', {params});
+  }
+
+  updateResident(requestModel: any): Observable<string> {
+    return this.http.post<string>('api/protected/resident/update', requestModel);
   }
 }

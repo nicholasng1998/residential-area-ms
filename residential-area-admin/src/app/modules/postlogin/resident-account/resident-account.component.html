@@ -25,10 +25,73 @@
             <td>{{ data.unitNo }}</td>
             <td>{{ data.status }}</td>
             <td>
-                <button nz-button nzType="primary" (click)="routeToDashboard()">Update</button>
+                <button nz-button nzType="primary" (click)="openEditModal()">Update</button>
                 <nz-divider nzType="vertical"></nz-divider>
                 <button nz-button nzType="primary" nzDanger (click)="deleteResident(data.id)">Delete</button>
             </td>
+              <nz-modal [(nzVisible)]="editShowModal" nzOkText="Edit" nzTitle="Edit Resident" (nzOnCancel)="closeEditModal()" (nzOnOk)="editResident()">
+              <ng-container *nzModalContent>
+                  <form nz-form [formGroup]="editResidentForm">
+                    <nz-form-item class="d-none">
+                      <nz-form-control>
+                        <nz-input-group nzPrefixIcon="user">
+                          <input type="text" nz-input [ngModel] = data?.id
+                                  formControlName="id"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input resident name.">
+                          <nz-input-group nzPrefixIcon="user">
+                            <input type="text" nz-input [ngModel] = data?.name
+                                    formControlName="name"
+                                    placeholder="Resident Name"/>
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+          
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input resident age">
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input nz-input formControlName="age" [ngModel] = data?.age
+                                    placeholder="Age"/>
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+          
+                      <nz-form-item>
+                          <nz-form-control nzErrorTip="Please input resident email">
+                            <nz-input-group nzPrefixIcon="user">
+                              <input type="text" nz-input [ngModel] = data?.email
+                                      formControlName="email"
+                                      placeholder="Email"/>
+                            </nz-input-group>
+                          </nz-form-control>
+                        </nz-form-item>
+          
+                        <nz-form-item>
+                          <nz-form-control nzErrorTip="Please input resident phone number.">
+                            <nz-input-group nzPrefixIcon="user">
+                              <input type="text" nz-input [ngModel] = data?.phoneNo
+                                      formControlName="phoneNo"
+                                      placeholder="Phone No"/>
+                            </nz-input-group>
+                          </nz-form-control>
+                        </nz-form-item>
+          
+                        <nz-form-item>
+                          <nz-form-control nzErrorTip="Please input resident unit number.">
+                            <nz-input-group nzPrefixIcon="user">
+                              <input type="text" nz-input [ngModel] = data?.unitNo
+                                      formControlName="unitNo"
+                                      placeholder="Unit No"/>
+                            </nz-input-group>
+                          </nz-form-control>
+                        </nz-form-item>
+                    </form>
+              </ng-container>
+            </nz-modal>
           </tr>
         </tbody>
       </nz-table>
@@ -108,3 +171,4 @@
           </form>
     </ng-container>
   </nz-modal>
+  

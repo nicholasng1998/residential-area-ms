@@ -7,7 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import residentialarea.model.ResidentCreateRequestModel;
 import residentialarea.model.CommonResponseModel;
-import residentialarea.model.ResidentialResponseModel;
+import residentialarea.model.ResidentEditRequestModel;
+import residentialarea.model.ResidentResponseModel;
 import residentialarea.service.ResidentService;
 
 import java.util.ArrayList;
@@ -35,23 +36,36 @@ public class ResidentRestController {
 
     @GetMapping(value = "/read")
     @SuppressWarnings("unused")
-    public ResponseEntity<List<ResidentialResponseModel>> readResident() {
-        List<ResidentialResponseModel> residentialResponseModels = new ArrayList<>();
+    public ResponseEntity<List<ResidentResponseModel>> readResident() {
+        List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
         try {
-            residentialResponseModels = residentService.readResident();
+            residentResponseModels = residentService.readResident();
         } catch (Exception e) {
             log.error("error: ", e);
-            return new ResponseEntity<>(residentialResponseModels, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(residentResponseModels, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(residentialResponseModels, HttpStatus.OK);
+        return new ResponseEntity<>(residentResponseModels, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete")
     @SuppressWarnings("unused")
     public ResponseEntity<CommonResponseModel> deleteResident(@RequestParam Integer id) {
-        List<ResidentialResponseModel> residentialResponseModels = new ArrayList<>();
+        List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
         try {
             residentService.deleteResident(id);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/update")
+    @SuppressWarnings("unused")
+    public ResponseEntity<CommonResponseModel> updateResident(@RequestBody ResidentEditRequestModel requestModel) {
+        List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
+        try {
+            residentService.updateResident(requestModel);
         } catch (Exception e) {
             log.error("error: ", e);
             return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);

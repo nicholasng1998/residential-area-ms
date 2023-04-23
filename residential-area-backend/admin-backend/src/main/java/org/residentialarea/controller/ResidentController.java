@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.ResidentFeignService;
 import org.residentialarea.model.ResidentCreateRequestModel;
 import org.residentialarea.model.CommonResponseModel;
-import org.residentialarea.model.ResidentialResponseModel;
+import org.residentialarea.model.ResidentEditRequestModel;
+import org.residentialarea.model.ResidentResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class ResidentController {
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ResponseEntity<List<ResidentialResponseModel>> readResident() {
+    public ResponseEntity<List<ResidentResponseModel>> readResident() {
         return new ResponseEntity<>(residentFeignService.readResident(), HttpStatus.OK);
     }
 
@@ -34,5 +35,11 @@ public class ResidentController {
     public ResponseEntity<CommonResponseModel> deleteResident(@RequestParam Integer id) {
         log.info("deleteResident: " + id);
         return new ResponseEntity<>(residentFeignService.deleteResident(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<CommonResponseModel> updateResident(@RequestBody ResidentEditRequestModel requestModel) {
+        log.info("updateResident: " + requestModel);
+        return new ResponseEntity<>(residentFeignService.updateResident(requestModel), HttpStatus.OK);
     }
 }
