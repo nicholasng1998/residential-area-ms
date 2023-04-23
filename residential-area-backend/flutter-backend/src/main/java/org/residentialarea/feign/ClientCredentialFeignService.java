@@ -1,7 +1,7 @@
 package org.residentialarea.feign;
 
-import org.residentialarea.model.ClientCredentialModel;
-import org.residentialarea.model.CreateClientCredentialRequestBody;
+import org.residentialarea.model.ResidentCredentialModel;
+import org.residentialarea.model.CreateResidentCredentialRequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ClientCredentialFeignService {
 
     @GetMapping(value = "/get")
-    ClientCredentialModel getClientCredentialModel(@RequestParam String username);
+    ResidentCredentialModel getClientCredentialModel(@RequestParam String username);
 
     @PostMapping(value = "/create")
-    String createClientCredential(@RequestBody CreateClientCredentialRequestBody requestBody);
+    String createClientCredential(@RequestBody CreateResidentCredentialRequestBody requestBody);
 }

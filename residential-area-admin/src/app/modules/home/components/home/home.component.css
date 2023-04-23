@@ -1,0 +1,17 @@
+.homepage {
+    height: 100%;
+    background-image: url('https://images2.alphacoders.com/528/528327.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.card-style {
+    width: 40%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 50%;
+}
+

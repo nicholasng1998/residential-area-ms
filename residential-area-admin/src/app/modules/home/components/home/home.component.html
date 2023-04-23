@@ -1,0 +1,36 @@
+<div class="homepage">
+    <nz-card class="px-4 py-3 card-style">
+      <div class="logo text-center">
+        <img class="login-logo mb-3" src="https://boostlikes-bc85.kxcdn.com/blog/wp-content/uploads/2019/08/Facebook-Page-Admin.jpg" width="100px">
+      </div>
+      <div>
+          <b class="mb-2">Log In</b>
+          <p class="text-sm">Welcome to Admin System</p>
+            <form nz-form [formGroup]="loginForm" class="login-form mb-3">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your username">
+                  <nz-input-group nzPrefixIcon="user">
+                    <input type="text" nz-input
+                           formControlName="username"
+                           placeholder="Username"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="mb-2">
+                <nz-form-control nzErrorTip="Please input your password">
+                  <nz-input-group nzPrefixIcon="lock">
+                    <input nz-input formControlName="password"
+                           (keyup.enter)="login()"
+                           placeholder="Password"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </form>
+          <div nz-row class="mb-3">
+            <button nz-button (click)="login()" nzBlock nzType="primary" nzSize="large" [nzLoading]='loading' class="button">Log in
+            </button>
+          </div>
+        </div>
+      </nz-card>
+      
+</div>

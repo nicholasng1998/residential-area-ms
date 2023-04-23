@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.residentialarea.feign.ClientCredentialFeignService;
-import org.residentialarea.model.ClientCredentialModel;
+import org.residentialarea.model.ResidentCredentialModel;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,14 +40,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         log.info("username: " + username);
         log.info("password: " + pass);
 
-        ClientCredentialModel clientCredentialModel = clientCredentialFeignService.getClientCredentialModel(username);
-        log.info("clientCredentialModel: " + clientCredentialModel);
-        if (clientCredentialModel == null) {
+        ResidentCredentialModel residentCredentialModel = clientCredentialFeignService.getClientCredentialModel(username);
+        log.info("clientCredentialModel: " + residentCredentialModel);
+        if (residentCredentialModel == null) {
             log.info("Client credential not found.");
             return null;
         }
 
-        if (!pass.equals(clientCredentialModel.getPassword())) {
+        if (!pass.equals(residentCredentialModel.getPassword())) {
             log.info("Correct username but wrong password.");
             return null;
         }
