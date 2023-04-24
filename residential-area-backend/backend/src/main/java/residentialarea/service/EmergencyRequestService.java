@@ -7,4 +7,8 @@ import java.util.List;
 public interface EmergencyRequestService {
 
     List<EmergencyResponseModel> findAllEmergencyRequest();
+
+    void resolve(int id);
+
+    void reject(int id);
 }

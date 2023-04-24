@@ -20,7 +20,11 @@
             <td>{{ data.message }}</td>
             <td>{{ data.residentName }}</td>
             <td>{{ data.unitNo }}</td>
-            <td>{{ data.status }}</td>
+            <td>
+              <nz-tag [nzColor]="'default'" *ngIf="data.status === 'PENDING'">{{ data.status }}</nz-tag>
+              <nz-tag [nzColor]="'green'" *ngIf="data.status === 'RESOLVED'">{{ data.status }}</nz-tag>
+              <nz-tag [nzColor]="'red'" *ngIf="data.status === 'REJECTED'">{{ data.status }}</nz-tag>
+            </td>
             <td>
                 <button nz-button nzType="primary" (click)="resolved(data.id)">Resolved</button>
                 <nz-divider nzType="vertical"></nz-divider>

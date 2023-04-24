@@ -29,10 +29,14 @@ export class EmergencyRequestManagementComponent implements OnInit {
   }
 
   reject(id: number) {
-
+    this.emergencyRequest.rejectEmergencyRequest(id).subscribe((res) => {
+      this.ngOnInit();
+    });
   }  
 
   resolved(id: number) {
-
+    this.emergencyRequest.resolveEmergencyRequest(id).subscribe((res) => {
+      this.ngOnInit();
+    });
   }
 }

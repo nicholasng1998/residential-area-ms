@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -20,5 +20,17 @@ export class EmergencyRequestService {
 
   findAllEmergencyRequest(): Observable<EmergencyRequestModel[]>{
     return this.http.get<EmergencyRequestModel[]>('api/protected/emergency-request/read');
+  }
+
+  resolveEmergencyRequest(id: number): Observable<string> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.post<string>('api/protected/emergency-request/resolve', {}, {params});
+  }
+
+  rejectEmergencyRequest(id: number): Observable<string> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.post<string>('api/protected/emergency-request/reject', {}, {params});
   }
 }

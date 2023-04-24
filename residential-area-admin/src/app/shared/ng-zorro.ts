@@ -11,6 +11,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const NG_ZORRO_MODULES = [
@@ -28,5 +29,6 @@ export const NG_ZORRO_MODULES = [
   NzMenuModule,
   NzDividerModule,
   NzTableModule,
+  NzTagModule,
   ReactiveFormsModule,
 ]

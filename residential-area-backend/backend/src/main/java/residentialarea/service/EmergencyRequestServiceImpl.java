@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.ResidentBean;
+import residentialarea.constant.EmergencyRequestStatusEnum;
 import residentialarea.dao.EmergencyRequestDao;
 import residentialarea.dao.ResidentDao;
 import residentialarea.model.EmergencyResponseModel;
@@ -36,5 +37,21 @@ public class EmergencyRequestServiceImpl implements EmergencyRequestService{
             emergencyResponseModels.add(emergencyResponseModel);
         });
         return emergencyResponseModels;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resolve(int id) {
+        EmergencyRequestBean emergencyRequestBean = emergencyRequestDao.getOne(id);
+        emergencyRequestBean.setStatus(EmergencyRequestStatusEnum.RESOLVED.getStatus());
+        emergencyRequestDao.save(emergencyRequestBean);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void reject(int id) {
+        EmergencyRequestBean emergencyRequestBean = emergencyRequestDao.getOne(id);
+        emergencyRequestBean.setStatus(EmergencyRequestStatusEnum.REJECTED.getStatus());
+        emergencyRequestDao.save(emergencyRequestBean);
     }
 }
