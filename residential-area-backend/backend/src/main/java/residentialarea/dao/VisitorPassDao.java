@@ -6,4 +6,5 @@ import residentialarea.bean.VisitorPassBean;
 
 @Repository
 public interface VisitorPassDao extends JpaRepository<VisitorPassBean, Integer> {
+
 }
