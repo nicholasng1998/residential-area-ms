@@ -3,14 +3,20 @@ package residentialarea.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import residentialarea.bean.ResidentBean;
 import residentialarea.bean.ResidentCredentialBean;
 import residentialarea.constant.ResidentCredentialStatusEnum;
 import residentialarea.constant.ResidentStatusEnum;
 import residentialarea.dao.ResidentCredentialDao;
 import residentialarea.dao.ResidentDao;
+import residentialarea.model.PageableRequestModel;
 import residentialarea.model.ResidentCreateRequestModel;
 import residentialarea.model.ResidentEditRequestModel;
 import residentialarea.model.ResidentResponseModel;
@@ -45,16 +51,17 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResidentResponseModel> readResident() {
+    public Page<ResidentResponseModel> readResident(int pageNumber, int pageSize) {
         log.info("readResident");
-        List<ResidentBean> residentBeans = residentDao.findAll();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        Page<ResidentBean> residentBeans = residentDao.findAll(pageable);
         List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
-        residentBeans.forEach((residentBean -> {
+        residentBeans.getContent().forEach((residentBean -> {
             ResidentResponseModel residentResponseModel = new ResidentResponseModel();
             BeanUtils.copyProperties(residentBean, residentResponseModel);
             residentResponseModels.add(residentResponseModel);
         }));
-        return residentResponseModels;
+        return new PageImpl<>(residentResponseModels, pageable, residentDao.findAll().size());
     }
 
     @Override

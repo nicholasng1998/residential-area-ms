@@ -10,6 +10,11 @@ import { ResidentResponseModel, ResidentService } from 'src/app/shared/resident.
 })
 export class ResidentAccountComponent implements OnInit {
 
+  // pagination
+  total = 0;
+  pageSize = 10;
+  pageNumber = 1;
+
   showModal = false;
   editShowModal = false;
   createResidentForm: FormGroup;
@@ -23,6 +28,7 @@ export class ResidentAccountComponent implements OnInit {
   username = 'username';
   password = 'password';
   data: ResidentResponseModel[] = [];
+  selectedData: ResidentResponseModel = {} as ResidentResponseModel;
 
   constructor(private router: Router, private fb: FormBuilder, private residentService: ResidentService) { 
     this.createResidentForm = this.fb.group({
@@ -45,9 +51,10 @@ export class ResidentAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.residentService.readResident().subscribe(res => {
+    this.residentService.readResident(this.pageSize, this.pageNumber).subscribe(res => {
       if (res) {
-        this.data = res;
+        this.data = res?.content;
+        this.total = res?.totalElements;
       }
     });
   }
@@ -78,7 +85,8 @@ export class ResidentAccountComponent implements OnInit {
     });
   }
 
-  openEditModal() {
+  openEditModal(id: number) {
+    this.selectedData = this.data.filter(d => d.id === id)[0];
     this.editShowModal = true;
   }
 
@@ -91,5 +99,10 @@ export class ResidentAccountComponent implements OnInit {
       this.closeModal();
       this.ngOnInit();
     });
+  }
+
+  changePage(pageNumber: number) {
+    this.pageNumber = pageNumber;
+    this.ngOnInit();
   }
 }

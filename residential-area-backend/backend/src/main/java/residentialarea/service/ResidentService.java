@@ -1,5 +1,7 @@
 package residentialarea.service;
 
+import org.springframework.data.domain.Page;
+import residentialarea.model.PageableRequestModel;
 import residentialarea.model.ResidentCreateRequestModel;
 import residentialarea.model.ResidentEditRequestModel;
 import residentialarea.model.ResidentResponseModel;
@@ -10,7 +12,7 @@ public interface ResidentService {
 
     void createResident(ResidentCreateRequestModel residentCreateRequestModel);
 
-    List<ResidentResponseModel> readResident();
+    Page<ResidentResponseModel> readResident(int pageSize, int pageNumber);
 
     void deleteResident(int id);
 

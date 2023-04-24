@@ -3,10 +3,7 @@ package org.residentialarea.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.ResidentFeignService;
-import org.residentialarea.model.ResidentCreateRequestModel;
-import org.residentialarea.model.CommonResponseModel;
-import org.residentialarea.model.ResidentEditRequestModel;
-import org.residentialarea.model.ResidentResponseModel;
+import org.residentialarea.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +24,9 @@ public class ResidentController {
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ResponseEntity<List<ResidentResponseModel>> readResident() {
-        return new ResponseEntity<>(residentFeignService.readResident(), HttpStatus.OK);
+    public ResponseEntity<PageModel<ResidentResponseModel>> readResident(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam(defaultValue = "1") Integer pageNumber) {
+        return new ResponseEntity<>(residentFeignService.readResident(pageSize, pageNumber), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

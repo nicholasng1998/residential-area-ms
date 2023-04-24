@@ -2,6 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface PageModel<T> {
+  content: T[];
+  size: number;
+  totalPages: number;
+  numberOfElements: number;
+  totalElements: number;
+}
+
 export interface ResidentResponseModel {
   id: number;
   name: string;
@@ -23,8 +31,11 @@ export class ResidentService {
     return this.http.post<string>('api/protected/resident/create', requestModal);
   }
 
-  readResident(): Observable<ResidentResponseModel[]>{
-    return this.http.get<ResidentResponseModel[]>('api/protected/resident/read');
+  readResident(pageSize: number, pageNumber: number): Observable<PageModel<ResidentResponseModel>>{
+    let params = new HttpParams();
+    params = params.append('pageSize', pageSize);
+    params = params.append('pageNumber', pageNumber);
+    return this.http.get<PageModel<ResidentResponseModel>>('api/protected/resident/read', {params});
   }
 
   deleteResident(id: number): Observable<string>{

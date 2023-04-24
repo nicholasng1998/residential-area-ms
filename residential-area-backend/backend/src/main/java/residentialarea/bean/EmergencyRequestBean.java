@@ -21,4 +21,7 @@ public class EmergencyRequestBean {
 
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "RESIDENT_ID")
+    private Integer residentId;
 }

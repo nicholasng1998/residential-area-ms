@@ -1,9 +1,6 @@
 package org.residentialarea.feign;
 
-import org.residentialarea.model.ResidentCreateRequestModel;
-import org.residentialarea.model.CommonResponseModel;
-import org.residentialarea.model.ResidentEditRequestModel;
-import org.residentialarea.model.ResidentResponseModel;
+import org.residentialarea.model.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +13,7 @@ public interface ResidentFeignService {
     CommonResponseModel createResident(@RequestBody ResidentCreateRequestModel requestBody);
 
     @GetMapping(value = "/read")
-    List<ResidentResponseModel> readResident();
+    PageModel<ResidentResponseModel> readResident(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber);
 
     @DeleteMapping(value = "/delete")
     CommonResponseModel deleteResident(@RequestParam("id") Integer id);

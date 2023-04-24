@@ -2,13 +2,11 @@ package residentialarea.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import residentialarea.model.ResidentCreateRequestModel;
-import residentialarea.model.CommonResponseModel;
-import residentialarea.model.ResidentEditRequestModel;
-import residentialarea.model.ResidentResponseModel;
+import residentialarea.model.*;
 import residentialarea.service.ResidentService;
 
 import java.util.ArrayList;
@@ -36,13 +34,15 @@ public class ResidentRestController {
 
     @GetMapping(value = "/read")
     @SuppressWarnings("unused")
-    public ResponseEntity<List<ResidentResponseModel>> readResident() {
-        List<ResidentResponseModel> residentResponseModels = new ArrayList<>();
+    public ResponseEntity<Page<ResidentResponseModel>> readResident(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam(defaultValue = "1") Integer pageNumber) {
+        Page<ResidentResponseModel> residentResponseModels;
         try {
-            residentResponseModels = residentService.readResident();
+            residentResponseModels = residentService.readResident(pageNumber, pageSize);
+            log.info("residentResponseModels: " + residentResponseModels);
         } catch (Exception e) {
             log.error("error: ", e);
-            return new ResponseEntity<>(residentResponseModels, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(residentResponseModels, HttpStatus.OK);
     }

@@ -1,1 +1,33 @@
-<p>emergency-request-management works!</p>
+<div class="layout position-relative">
+    <div class="mt-3">
+        <button nz-button nzType="primary" class="mb-3" (click)="routeToDashboard()">Back To Dashboard</button>
+    </div>
+    
+    <nz-table #basicTable [nzData]="data">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Resident Name</th>
+            <th>Unit No</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.title }}</td>
+            <td>{{ data.message }}</td>
+            <td>{{ data.residentName }}</td>
+            <td>{{ data.unitNo }}</td>
+            <td>{{ data.status }}</td>
+            <td>
+                <button nz-button nzType="primary" (click)="resolved(data.id)">Resolved</button>
+                <nz-divider nzType="vertical"></nz-divider>
+                <button nz-button nzType="primary" nzDanger (click)="reject(data.id)">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+</div>
+    

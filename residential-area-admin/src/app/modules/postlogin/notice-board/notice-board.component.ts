@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notice-board',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoticeBoardComponent implements OnInit {
 
-  constructor() { }
+  showModal = false;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  routeToDashboard() {
+    this.router.navigate(['/main/dashboard']);
+  }
+
+  openModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
 }
