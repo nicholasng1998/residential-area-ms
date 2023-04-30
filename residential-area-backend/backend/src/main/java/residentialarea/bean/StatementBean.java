@@ -20,4 +20,7 @@ public class StatementBean {
 
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "RESIDENT_ID")
+    private int residentId;
 }

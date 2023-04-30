@@ -3,7 +3,12 @@
         <button nz-button nzType="primary" class="mb-3" (click)="routeToDashboard()">Back To Dashboard</button>
     </div>
     
-    <nz-table #basicTable [nzData]="data">
+    <nz-table #basicTable [nzData]="data"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageNumber"
+    (nzPageIndexChange)="changePage($event)">
         <thead>
           <tr>
             <th>Title</th>

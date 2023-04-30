@@ -19,8 +19,11 @@ export class EmergencyRequestManagementComponent implements OnInit {
   data: EmergencyRequestModel[] = [];
 
   ngOnInit(): void {
-    this.emergencyRequest.findAllEmergencyRequest().subscribe((res) => {
-      this.data = res;
+    this.emergencyRequest.findAllEmergencyRequest(this.pageSize, this.pageNumber).subscribe((res) => {
+      if (res) {
+        this.data = res?.content;
+        this.total = res?.totalElements;
+      }
     });
   }
 
@@ -38,5 +41,10 @@ export class EmergencyRequestManagementComponent implements OnInit {
     this.emergencyRequest.resolveEmergencyRequest(id).subscribe((res) => {
       this.ngOnInit();
     });
+  }
+
+  changePage(pageNumber: number) {
+    this.pageNumber = pageNumber;
+    this.ngOnInit();
   }
 }

@@ -2,6 +2,7 @@ package residentialarea.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,14 @@ public class EmergencyRequestRestController {
 
     @GetMapping(value = "/read")
     @SuppressWarnings("unused")
-    public ResponseEntity<List<EmergencyResponseModel>> findAllEmergencyRequest() {
+    public ResponseEntity<Page<EmergencyResponseModel>> findAllEmergencyRequest(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                @RequestParam(defaultValue = "1") Integer pageNumber) {
         log.info("/read");
         try {
-            return new ResponseEntity<>(emergencyRequestService.findAllEmergencyRequest(), HttpStatus.OK);
+            return new ResponseEntity<>(emergencyRequestService.findAllEmergencyRequest(pageSize, pageNumber), HttpStatus.OK);
         } catch (Exception e) {
             log.error("error: ", e);
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

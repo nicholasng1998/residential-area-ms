@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,6 +9,9 @@ export class StatementService {
   constructor(private http: HttpClient) { }
 
   getStatement(year: number, month: number): any{
-    return this.http.get<any>('api/protected/visitor-pass/read');
+    let params = new HttpParams();
+    params = params.append('year', year);
+    params = params.append('month', month);
+    return this.http.get('api/protected/statement/read', {params, responseType: 'blob'});
   }
 }

@@ -1,6 +1,7 @@
 package org.residentialarea.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -9,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface StatementFeignService {
 
     @GetMapping(value = "/read")
-    byte[] getStatement(@RequestParam("year") Integer year, @RequestParam("year") Integer month);
+    Resource getStatement(@RequestParam("year") Integer year, @RequestParam("month") Integer month);
 }

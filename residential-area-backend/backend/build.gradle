@@ -6,6 +6,7 @@ apply from: '../build.gradle'
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.3'
+    implementation group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf-openpdf', version: '9.1.22'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.31'
     implementation("mysql:mysql-connector-java:8.0.32")
 }

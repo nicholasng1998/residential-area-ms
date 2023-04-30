@@ -1,6 +1,35 @@
 <div class="layout position-relative">
     <div class="mt-3">
-        <button nz-button nzType="primary" class="mb-3" (click)="routeToDashboard()"> Back To Dashboard</button>
+        <button nz-button nzType="primary" class="mb-3" (click)="routeToDashboard()">Back To Dashboard</button>
     </div>
+    <div>
+        <nz-card [nzBordered]="true" nzTitle="Generate Statement" class="w-50 mx-auto">
+            <form nz-form [formGroup]="generatePdfForm">
+              <p>Statement Year: </p>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input year.">
+                  <nz-input-group>
+                    <input type="text" nz-input
+                            formControlName="year"
+                            placeholder="Year"
+                            (keypress)="numericPressOnly($event)"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+
+              <p>Statement Month: </p>
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please input month.">
+                  <nz-input-group>
+                    <input type="text" nz-input
+                            formControlName="month"
+                            placeholder="Month"
+                            (keypress)="numericPressOnly($event)"/>
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </form>
+            <button nz-button nzType="primary" (click)="generatePdf()">Generate</button>
+        </nz-card>
     </div>
-    
+</div>

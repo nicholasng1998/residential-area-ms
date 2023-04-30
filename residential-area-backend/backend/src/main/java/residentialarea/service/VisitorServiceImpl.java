@@ -3,8 +3,13 @@ package residentialarea.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import residentialarea.bean.ResidentBean;
 import residentialarea.bean.VisitorPassBean;
 import residentialarea.dao.VisitorPassDao;
 import residentialarea.model.VisitorPassResponseModel;
@@ -21,15 +26,16 @@ public class VisitorServiceImpl implements VisitorPassService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<VisitorPassResponseModel> readAll() {
+    public Page<VisitorPassResponseModel> readAll(int pageSize, int pageNumber) {
         log.info("VisitorServiceImpl#readAll");
-        List<VisitorPassBean> visitorPassBeans = visitorPassDao.findAll();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        Page<VisitorPassBean> visitorPassBeans = visitorPassDao.findAll(pageable);
         List<VisitorPassResponseModel> visitorPassResponseModels = new ArrayList<>();
         visitorPassBeans.forEach(visitorPassBean -> {
             VisitorPassResponseModel visitorPassResponseModel = new VisitorPassResponseModel();
             BeanUtils.copyProperties(visitorPassBean, visitorPassResponseModel);
             visitorPassResponseModels.add(visitorPassResponseModel);
         });
-        return visitorPassResponseModels;
+        return new PageImpl<>(visitorPassResponseModels, pageable, visitorPassDao.findAll().size());
     }
 }

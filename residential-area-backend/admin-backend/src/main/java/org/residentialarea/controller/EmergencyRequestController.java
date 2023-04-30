@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.EmergencyRequestFeignService;
 import org.residentialarea.model.CommonResponseModel;
 import org.residentialarea.model.EmergencyResponseModel;
+import org.residentialarea.model.PageModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,9 @@ public class EmergencyRequestController {
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     @SuppressWarnings("unused")
-    public ResponseEntity<List<EmergencyResponseModel>> findAllEmergencyRequest() {
-        return new ResponseEntity<>(emergencyRequestFeignService.findAllEmergencyRequest(), HttpStatus.OK);
+    public ResponseEntity<PageModel<EmergencyResponseModel>> findAllEmergencyRequest(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                     @RequestParam(defaultValue = "1") Integer pageNumber) {
+        return new ResponseEntity<>(emergencyRequestFeignService.findAllEmergencyRequest(pageSize, pageNumber), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/resolve", method = RequestMethod.POST)

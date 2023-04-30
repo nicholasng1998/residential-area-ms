@@ -2,6 +2,7 @@ package org.residentialarea.feign;
 
 import org.residentialarea.model.CommonResponseModel;
 import org.residentialarea.model.EmergencyResponseModel;
+import org.residentialarea.model.PageModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,8 @@ import java.util.List;
 public interface EmergencyRequestFeignService {
 
     @GetMapping(value = "/read")
-    List<EmergencyResponseModel> findAllEmergencyRequest();
+    PageModel<EmergencyResponseModel> findAllEmergencyRequest(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                              @RequestParam(defaultValue = "1") Integer pageNumber);
 
     @PostMapping(value = "/resolve")
     CommonResponseModel resolveEmergencyRequest(@RequestParam("id") Integer id);

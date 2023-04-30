@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.StatementFeignService;
 import org.residentialarea.model.VisitorPassResponseModel;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,10 +23,7 @@ public class StatementController {
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     @SuppressWarnings("unused")
-    public ResponseEntity<byte[]> getStatement(@RequestParam Integer year, @RequestParam Integer month) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "statement.pdf");
+    public ResponseEntity<Resource> getStatement(@RequestParam Integer year, @RequestParam Integer month) {
         return new ResponseEntity<>(statementFeignService.getStatement(year, month), HttpStatus.OK);
     }
 }

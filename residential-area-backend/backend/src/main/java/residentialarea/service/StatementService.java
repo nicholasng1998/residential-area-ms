@@ -1,10 +1,8 @@
 package residentialarea.service;
 
-import com.itextpdf.text.DocumentException;
-
-import java.io.IOException;
+import org.springframework.core.io.Resource;
 
 public interface StatementService {
 
-    byte[] generateStatement(Integer year, Integer month) throws DocumentException, IOException;
+    Resource generateStatement(Integer year, Integer month);
 }

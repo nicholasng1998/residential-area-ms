@@ -3,10 +3,15 @@ package residentialarea.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.ResidentBean;
+import residentialarea.bean.VisitorPassBean;
 import residentialarea.constant.EmergencyRequestStatusEnum;
 import residentialarea.dao.EmergencyRequestDao;
 import residentialarea.dao.ResidentDao;
@@ -25,8 +30,10 @@ public class EmergencyRequestServiceImpl implements EmergencyRequestService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<EmergencyResponseModel> findAllEmergencyRequest() {
-        List<EmergencyRequestBean> emergencyRequestBeans = emergencyRequestDao.findAll();
+    public Page<EmergencyResponseModel> findAllEmergencyRequest(int pageSize, int pageNumber) {
+        log.info("findAllEmergencyRequest");
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        Page<EmergencyRequestBean> emergencyRequestBeans = emergencyRequestDao.findAll(pageable);
         List<EmergencyResponseModel> emergencyResponseModels = new ArrayList<>();
         emergencyRequestBeans.forEach(emergencyRequestBean -> {
             EmergencyResponseModel emergencyResponseModel = new EmergencyResponseModel();
@@ -36,7 +43,7 @@ public class EmergencyRequestServiceImpl implements EmergencyRequestService{
             emergencyResponseModel.setUnitNo(residentBean.getUnitNo());
             emergencyResponseModels.add(emergencyResponseModel);
         });
-        return emergencyResponseModels;
+        return new PageImpl<>(emergencyResponseModels, pageable, emergencyRequestDao.findAll().size());
     }
 
     @Override
