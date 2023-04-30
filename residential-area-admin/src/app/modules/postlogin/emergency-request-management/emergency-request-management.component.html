@@ -31,9 +31,10 @@
               <nz-tag [nzColor]="'red'" *ngIf="data.status === 'REJECTED'">{{ data.status }}</nz-tag>
             </td>
             <td>
-                <button nz-button nzType="primary" (click)="resolved(data.id)">Resolved</button>
-                <nz-divider nzType="vertical"></nz-divider>
-                <button nz-button nzType="primary" nzDanger (click)="reject(data.id)">Reject</button>
+                <button *ngIf="data.status !== 'REJECTED' && data.status !== 'RESOLVED'" nz-button nzType="primary" (click)="resolved(data.id)">Resolved</button>
+                <nz-divider *ngIf="data.status !== 'REJECTED' && data.status !== 'RESOLVED'" nzType="vertical"></nz-divider>
+                <button *ngIf="data.status !== 'REJECTED' && data.status !== 'RESOLVED'" nz-button nzType="primary" nzDanger (click)="reject(data.id)">Reject</button>
+                <p *ngIf="data.status === 'REJECTED' || data.status === 'RESOLVED'">-</p>
             </td>
           </tr>
         </tbody>

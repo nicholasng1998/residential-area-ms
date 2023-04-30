@@ -13,6 +13,5 @@ import java.util.List;
 public interface VisitorPassFeignService {
 
     @GetMapping(value = "/read")
-    PageModel<VisitorPassResponseModel> readAll(@RequestParam(defaultValue = "10") Integer pageSize,
-                                                @RequestParam(defaultValue = "1") Integer pageNumber);
+    PageModel<VisitorPassResponseModel> readAll(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber);
 }
