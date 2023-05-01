@@ -1,6 +1,7 @@
 package residentialarea.service;
 
 import org.springframework.data.domain.Page;
+import residentialarea.model.CreatePaymentRequestModel;
 import residentialarea.model.PaymentResponseModel;
 
 public interface PaymentService {
@@ -9,4 +10,6 @@ public interface PaymentService {
     void complete(int id);
 
     void reject(int id);
+
+    void create(CreatePaymentRequestModel createPaymentRequestModel);
 }

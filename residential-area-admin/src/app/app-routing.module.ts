@@ -15,10 +15,10 @@ const routes: Routes = [
     path: 'main',
     loadChildren: () => import('./modules/postlogin/postlogin.module').then(m => m.PostloginModule)
   },
-  {
-    path: 'payment',
-    loadChildren: () => import('./modules/payment/payment.module').then(m => m.PaymentModule)
-  }
+  // {
+  //   path: 'payment',
+  //   loadChildren: () => import('./modules/payment/payment.module').then(m => m.PaymentModule)
+  // }
 ];
 
 @NgModule({

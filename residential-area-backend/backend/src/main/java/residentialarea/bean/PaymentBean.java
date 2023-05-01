@@ -26,4 +26,7 @@ public class PaymentBean {
 
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "STATEMENT_ID")
+    private int statementId;
 }

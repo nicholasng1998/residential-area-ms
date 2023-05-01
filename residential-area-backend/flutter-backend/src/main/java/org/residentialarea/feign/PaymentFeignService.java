@@ -1,11 +1,13 @@
 package org.residentialarea.feign;
 
 import org.residentialarea.model.CommonResponseModel;
+import org.residentialarea.model.CreatePaymentRequestModel;
 import org.residentialarea.model.PageModel;
 import org.residentialarea.model.PaymentResponseModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "PAYMENT", url = "http://localhost:8081", path = "/v1/payment")
@@ -18,4 +20,7 @@ public interface PaymentFeignService {
 
     @PostMapping(value = "/reject")
     CommonResponseModel rejectPayment(@RequestParam("id") Integer id);
+
+    @PostMapping(value = "/create")
+    CommonResponseModel createPayment(@RequestBody CreatePaymentRequestModel requestModel);
 }

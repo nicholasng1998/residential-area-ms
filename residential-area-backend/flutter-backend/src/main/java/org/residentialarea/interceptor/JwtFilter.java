@@ -28,44 +28,44 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestUrl = getRequestUrl(request);
         log.info("User request: " + requestUrl);
-
-        if (!requestUrl.contains("protected")) {
-            log.info("Non protected API");
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            log.info("Invalid authorization");
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid authorization");
-            return;
-        }
-
-        String token = authorizationHeader.substring(7);
-        try {
-            log.info("secretKey: " + secretKey);
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-
-            String username = claims.getSubject();
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    null
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (JwtException e) {
-            log.error("error: ", e);
-            log.info("Check token failed.");
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid token");
-            return;
-        }
+//
+//        if (!requestUrl.contains("protected")) {
+//            log.info("Non protected API");
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        String authorizationHeader = request.getHeader("Authorization");
+//        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+//            log.info("Invalid authorization");
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid authorization");
+//            return;
+//        }
+//
+//        String token = authorizationHeader.substring(7);
+//        try {
+//            log.info("secretKey: " + secretKey);
+//            Claims claims = Jwts.parserBuilder()
+//                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+//                    .build()
+//                    .parseClaimsJws(token)
+//                    .getBody();
+//
+//            String username = claims.getSubject();
+//            Authentication authentication = new UsernamePasswordAuthenticationToken(
+//                    username,
+//                    null,
+//                    null
+//            );
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        } catch (JwtException e) {
+//            log.error("error: ", e);
+//            log.info("Check token failed.");
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid token");
+//            return;
+//        }
 
         filterChain.doFilter(request, response);
     }
