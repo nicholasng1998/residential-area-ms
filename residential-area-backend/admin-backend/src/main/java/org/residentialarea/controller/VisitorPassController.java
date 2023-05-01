@@ -23,8 +23,8 @@ public class VisitorPassController {
     private final VisitorPassFeignService visitorPassFeignService;
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     @SuppressWarnings("unused")
-    public ResponseEntity<PageModel<VisitorPassResponseModel>> findAllEmergencyRequest(@RequestParam(defaultValue = "10") Integer pageSize,
-                                                                                       @RequestParam(defaultValue = "1") Integer pageNumber) {
+    public ResponseEntity<PageModel<VisitorPassResponseModel>> findAllVisitorPass(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                  @RequestParam(defaultValue = "1") Integer pageNumber) {
         return new ResponseEntity<>(visitorPassFeignService.readAll(pageSize, pageNumber), HttpStatus.OK);
     }
 }

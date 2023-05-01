@@ -31,7 +31,7 @@ const routes: Routes = [
         component: PaymentManagementComponent
       },
       {
-        path: 'statement',
+        path: 'payment-statement',
         component: ReportingComponent
       },
       {

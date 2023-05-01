@@ -38,27 +38,27 @@
       </nz-table>
 </div>
 
-<nz-modal [(nzVisible)]="showModal" nzTitle="Add New Notice" (nzOnCancel)="closeModal()" (nzOnOk)="createNotice()" nzOkText="Create">
+<nz-modal [(nzVisible)]="showModal" nzTitle="Add New Announcement" (nzOnCancel)="closeModal()" (nzOnOk)="createNotice()" nzOkText="Create">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="noticeForm">
-      <p>Notice Title:</p>
+      <p>Announcement Title:</p>
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please input notice title.">
+        <nz-form-control nzErrorTip="Please input announcement title.">
           <nz-input-group>
             <input type="text" nz-input
                    formControlName="title"
-                   placeholder="Notice Title"/>
+                   placeholder="Announcement Title"/>
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
 
-      <p>Notice Content:</p>
+      <p>Announcement Content:</p>
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please input notice content.">
+        <nz-form-control nzErrorTip="Please input announcement content.">
           <nz-input-group>
             <textarea
               nz-input
-              placeholder="Notice Content"
+              placeholder="Announcement Content"
               [nzAutosize]="{ minRows: 6, maxRows: 999 }"
               formControlName="content"
           ></textarea>

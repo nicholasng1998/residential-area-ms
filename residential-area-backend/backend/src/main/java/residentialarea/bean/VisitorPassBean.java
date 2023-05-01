@@ -19,9 +19,12 @@ public class VisitorPassBean {
     @Column(name = "RESIDENT_UNIT")
     private String residentUnit;
 
+    @Column(name = "IMAGE_STR")
+    private String imageStr;
+
     @Column(name = "STATUS")
     private String status;
 
     @Column(name = "RESIDENT_ID")
-    private String residentId;
+    private int residentId;
 }

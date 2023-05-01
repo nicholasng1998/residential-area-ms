@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import residentialarea.model.CreateVisitorPassRequestModel;
 import residentialarea.model.VisitorPassResponseModel;
 import residentialarea.service.VisitorPassService;
 
@@ -36,15 +37,15 @@ public class VisitorPassRestController {
 
     @PostMapping(value = "/create")
     @SuppressWarnings("unused")
-    public ResponseEntity<Page<VisitorPassResponseModel>> createVisitorPass() {
-        Page<VisitorPassResponseModel> visitorPassResponseModels;
+    public ResponseEntity<String> createVisitorPass(@RequestBody CreateVisitorPassRequestModel createVisitorPassRequestModel) {
+        String base64 = "";
         try {
-            visitorPassResponseModels = visitorPassService.readAll(pageSize, pageNumber);
-            log.info("visitorPassResponseModels: " + visitorPassResponseModels);
+            base64 = visitorPassService.create(createVisitorPassRequestModel);
+            log.info("base64: " + base64);
         } catch (Exception e) {
             log.error("error: ", e);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(visitorPassResponseModels, HttpStatus.OK);
+        return new ResponseEntity<>(base64, HttpStatus.OK);
     }
 }

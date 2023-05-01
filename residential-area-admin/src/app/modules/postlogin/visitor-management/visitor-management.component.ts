@@ -9,13 +9,21 @@ import { VisitorPassResponseModel, VisitorPassService } from 'src/app/shared/vis
 })
 export class VisitorManagementComponent implements OnInit {
 
+  // pagination
+  total = 0;
+  pageSize = 10;
+  pageNumber = 1;
+
   constructor(private router: Router, private visitorPassService: VisitorPassService) { }
 
   data: VisitorPassResponseModel[] = [];
 
   ngOnInit(): void {
-    this.visitorPassService.readAll().subscribe(res => {
-      this.data = res;
+    this.visitorPassService.readAll(this.pageSize, this.pageNumber).subscribe(res => {
+      if (res) {
+        this.data = res?.content;
+        this.total = res?.totalElements;
+      }
     });
   }
   

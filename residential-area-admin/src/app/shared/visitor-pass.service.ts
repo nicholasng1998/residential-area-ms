@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PageModel } from './resident.service';
 
 export interface VisitorPassResponseModel {
   uuid: string;
@@ -8,6 +9,7 @@ export interface VisitorPassResponseModel {
   residentUnit: string;
   status: string;
   residentId: number;
+  imageStr: string;
 }
 
 @Injectable({
@@ -17,7 +19,10 @@ export class VisitorPassService {
 
   constructor(private http: HttpClient) { }
 
-  readAll(): Observable<VisitorPassResponseModel[]>{
-    return this.http.get<VisitorPassResponseModel[]>('api/protected/visitor-pass/read');
+  readAll(pageSize: number, pageNumber: number): Observable<PageModel<VisitorPassResponseModel>>{
+    let params = new HttpParams();
+    params = params.append('pageSize', pageSize);
+    params = params.append('pageNumber', pageNumber);
+    return this.http.get<PageModel<VisitorPassResponseModel>>('api/protected/visitor-pass/read', {params});
   }
 }
