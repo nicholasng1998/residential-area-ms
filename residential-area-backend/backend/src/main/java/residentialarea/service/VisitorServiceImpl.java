@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.ResidentBean;
 import residentialarea.bean.ResidentCredentialBean;
 import residentialarea.bean.VisitorPassBean;
@@ -106,5 +107,23 @@ public class VisitorServiceImpl implements VisitorPassService{
             log.error("Failed to generate QR code: ", e);
             return null;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VisitorPassResponseModel> readVisitorPassByUsername(String username) {
+        log.info("VisitorServiceImpl#readAll");
+        ResidentCredentialBean residentCredentialBean = residentCredentialDao.findByUsername(username);
+        Pageable pageable = PageRequest.of(0, 999);
+        List<VisitorPassBean> visitorPassBeans = visitorPassDao.findAllByResidentId(residentCredentialBean.getResidentId());
+        List<VisitorPassResponseModel> visitorPassResponseModels = new ArrayList<>();
+        visitorPassBeans.forEach(visitorPassBean -> {
+            VisitorPassResponseModel visitorPassResponseModel = new VisitorPassResponseModel();
+            BeanUtils.copyProperties(visitorPassBean, visitorPassResponseModel);
+            ResidentBean residentBean = residentDao.getOne(visitorPassBean.getResidentId());
+            visitorPassResponseModel.setResidentUnit(residentBean.getUnitNo());
+            visitorPassResponseModels.add(visitorPassResponseModel);
+        });
+        return new PageImpl<>(visitorPassResponseModels, pageable, visitorPassDao.findAll().size());
     }
 }

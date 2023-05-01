@@ -35,7 +35,7 @@ const routes: Routes = [
         component: ReportingComponent
       },
       {
-        path: 'visitor-management',
+        path: 'visitor',
         component: VisitorManagementComponent
       },
       {

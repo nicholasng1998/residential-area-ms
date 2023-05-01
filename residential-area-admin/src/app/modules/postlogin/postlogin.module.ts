@@ -12,7 +12,6 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { EmergencyRequestManagementComponent } from './emergency-request-management/emergency-request-management.component';
 import { VisitorManagementComponent } from './visitor-management/visitor-management.component';
 
-
 @NgModule({
   declarations: [
     DashboardComponent,

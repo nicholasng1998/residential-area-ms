@@ -1,6 +1,7 @@
 package org.residentialarea.feign;
 
 import org.residentialarea.model.CreateVisitorPassRequestModel;
+import org.residentialarea.model.EmergencyResponseModel;
 import org.residentialarea.model.PageModel;
 import org.residentialarea.model.VisitorPassResponseModel;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,4 +18,7 @@ public interface VisitorPassFeignService {
 
     @PostMapping(value = "/create")
     String create(@RequestBody CreateVisitorPassRequestModel createVisitorPassRequestModel);
+
+    @GetMapping(value = "/read-by-username")
+    PageModel<VisitorPassResponseModel> findAllVisitorPassByUsername(@RequestParam("username") String username);
 }

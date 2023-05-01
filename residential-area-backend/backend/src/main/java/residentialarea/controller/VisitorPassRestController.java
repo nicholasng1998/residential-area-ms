@@ -48,4 +48,18 @@ public class VisitorPassRestController {
         }
         return new ResponseEntity<>(base64, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/read-by-username")
+    @SuppressWarnings("unused")
+    public ResponseEntity<Page<VisitorPassResponseModel>> readVisitorPassByUsername(@RequestParam("username") String username) {
+        Page<VisitorPassResponseModel> visitorPassResponseModels;
+        try {
+            visitorPassResponseModels = visitorPassService.readVisitorPassByUsername(username);
+            log.info("visitorPassResponseModels: " + visitorPassResponseModels);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(visitorPassResponseModels, HttpStatus.OK);
+    }
 }

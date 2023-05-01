@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.ResidentBean;
 import residentialarea.bean.ResidentCredentialBean;
-import residentialarea.bean.VisitorPassBean;
 import residentialarea.constant.EmergencyRequestStatusEnum;
 import residentialarea.dao.EmergencyRequestDao;
 import residentialarea.dao.ResidentCredentialDao;
