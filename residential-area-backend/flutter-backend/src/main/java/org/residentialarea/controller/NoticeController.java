@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.NoticeFeignService;
 import org.residentialarea.model.NoticeModel;
+import org.residentialarea.model.NoticeResponseModel;
+import org.residentialarea.model.PageModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class NoticeController {
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     @SuppressWarnings("unused")
-    public ResponseEntity<List<NoticeModel>> findByIsActiveAndExpiryDateAfter() {
+    public ResponseEntity<PageModel<NoticeResponseModel>> findByIsActiveAndExpiryDateAfter() {
         return new ResponseEntity<>(noticeFeignService.findByIsActiveAndExpiryDateAfter(), HttpStatus.OK);
     }
 }

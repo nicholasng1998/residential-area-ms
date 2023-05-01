@@ -1,5 +1,7 @@
 package org.residentialarea.feign;
 
+import org.residentialarea.model.PageModel;
+import org.residentialarea.model.StatementResponseModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,4 +13,7 @@ public interface StatementFeignService {
 
     @GetMapping(value = "/read")
     Resource getStatement(@RequestParam("year") Integer year, @RequestParam("month") Integer month);
+
+    @GetMapping(value = "/read-pending-statement")
+    PageModel<StatementResponseModel> getPendingStatement(@RequestParam("username") String username);
 }

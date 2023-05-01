@@ -14,4 +14,9 @@ public interface VisitorPassService {
     String create(CreateVisitorPassRequestModel createVisitorPassRequestModel);
 
     Page<VisitorPassResponseModel> readVisitorPassByUsername(String username);
+
+    void visitorComeIn(String uuid);
+
+    void visitorGoOut(String uuid);
+
 }

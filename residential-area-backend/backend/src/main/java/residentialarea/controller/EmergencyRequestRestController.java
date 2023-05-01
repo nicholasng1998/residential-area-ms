@@ -42,7 +42,7 @@ public class EmergencyRequestRestController {
             log.error("error: ", e);
             return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 
     @PostMapping(value = "/reject")

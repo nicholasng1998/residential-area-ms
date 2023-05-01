@@ -18,4 +18,8 @@ public interface StatementDao extends JpaRepository<StatementBean, Integer> {
     List<StatementBean> findAllByStatusAndYearAndMonth(@Param("status") String status,
                                                        @Param("year") Integer year,
                                                        @Param("month") Integer month);
+
+    @Query(value = "SELECT * FROM statement WHERE status=:status and resident_id=:residentId", nativeQuery = true)
+    List<StatementBean> findAllByStatusAndResidentId(@Param("status") String status,
+                                                     @Param("residentId") Integer residentId);
 }

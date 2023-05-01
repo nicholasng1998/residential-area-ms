@@ -27,17 +27,19 @@
             <td>{{ data.title }}</td>
             <td><a (click)="preview(data.id)">Click here to preview.</a></td>
             <td>{{ data.active }}</td>
-            <td>{{ data.expiryDate }}</td>
+            <td>{{ data.expiryDate | date }}</td>
             <td>
                 <button nz-button nzType="primary" (click)="openEditModal(data.id)">Edit</button>
                 <nz-divider nzType="vertical"></nz-divider>
-                <button nz-button nzType="primary" nzDanger (click)="deactivate(data.id)">Deactivate</button>
+                <button nz-button *ngIf="data.active === true" nzType="primary" nzDanger (click)="deactivate(data.id)">Deactivate</button>
+                <button nz-button *ngIf="data.active === false" nzType="primary" nzDanger (click)="activate(data.id)">Activate</button>
             </td>
           </tr>
         </tbody>
       </nz-table>
 </div>
 
+<!-- CREATE MODAL -->
 <nz-modal [(nzVisible)]="showModal" nzTitle="Add New Announcement" (nzOnCancel)="closeModal()" (nzOnOk)="createNotice()" nzOkText="Create">
   <ng-container *nzModalContent>
     <form nz-form [formGroup]="noticeForm">
@@ -94,5 +96,70 @@
 <nz-modal [(nzVisible)]="showPreviewModal" nzTitle="Preview" (nzOnCancel)="closePreviewModal()" (nzOnOk)="closePreviewModal()">
   <ng-container *nzModalContent>
     <div [innerHTML]="selectedPreviewContent"></div>
+  </ng-container>
+</nz-modal>
+
+<!-- EDIT MODAL -->
+<nz-modal [(nzVisible)]="showEditModal" nzTitle="Edit Announcement" (nzOnCancel)="closeEditModal()" (nzOnOk)="updateNotice()" nzOkText="Edit">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="editNoticeForm">
+      <nz-form-item class="d-none">
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input [ngModel] = selectedEditNotice?.id
+                    formControlName="id"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <p>Announcement Title:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input announcement title.">
+          <nz-input-group>
+            <input type="text" nz-input
+                   formControlName="title"
+                   [ngModel] = selectedEditNotice?.title
+                   placeholder="Announcement Title"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <p>Announcement Content:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input announcement content.">
+          <nz-input-group>
+            <textarea
+              nz-input
+              placeholder="Announcement Content"
+              [ngModel] = selectedEditNotice?.content
+              [nzAutosize]="{ minRows: 6, maxRows: 999 }"
+              formControlName="content"
+          ></textarea>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <p>Activation:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select activation.">
+          <nz-input-group>
+            <nz-radio-group [ngModel] = selectedEditNotice?.active formControlName="isActive">
+              <label nz-radio [nzValue]="true">Activate</label>
+              <label nz-radio [nzValue]="false">Inactivate</label>
+            </nz-radio-group>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <p>Expiry Date:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select expiry date.">
+          <nz-input-group>
+            <nz-date-picker [ngModel] = selectedEditNotice?.expiryDate (ngModelChange)="onChange($event)"
+            formControlName="expiryDate"></nz-date-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </ng-container>
 </nz-modal>

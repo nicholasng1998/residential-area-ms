@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.ResidentBean;
 import residentialarea.bean.ResidentCredentialBean;
 import residentialarea.bean.VisitorPassBean;
@@ -125,5 +124,21 @@ public class VisitorServiceImpl implements VisitorPassService{
             visitorPassResponseModels.add(visitorPassResponseModel);
         });
         return new PageImpl<>(visitorPassResponseModels, pageable, visitorPassDao.findAll().size());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void visitorComeIn(String uuid) {
+        VisitorPassBean visitorPassBean = visitorPassDao.getOne(uuid);
+        visitorPassBean.setStatus(VisitorPassStatusEnum.PENDING_OUT.getStatus());
+        visitorPassDao.save(visitorPassBean);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void visitorGoOut(String uuid) {
+        VisitorPassBean visitorPassBean = visitorPassDao.getOne(uuid);
+        visitorPassBean.setStatus(VisitorPassStatusEnum.USED.getStatus());
+        visitorPassDao.save(visitorPassBean);
     }
 }

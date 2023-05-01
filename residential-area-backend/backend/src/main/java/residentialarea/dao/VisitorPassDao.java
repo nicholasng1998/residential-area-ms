@@ -10,7 +10,7 @@ import residentialarea.bean.VisitorPassBean;
 import java.util.List;
 
 @Repository
-public interface VisitorPassDao extends JpaRepository<VisitorPassBean, Integer> {
+public interface VisitorPassDao extends JpaRepository<VisitorPassBean, String> {
     Page<VisitorPassBean> findAll(Pageable pageable);
 
     List<VisitorPassBean> findAllByResidentId(int residentId);

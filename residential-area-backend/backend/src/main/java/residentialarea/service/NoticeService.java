@@ -13,10 +13,10 @@ public interface NoticeService {
 
     void updateNotice(NoticeUpdateRequestBody noticeUpdateRequestBody);
     void createNotice(NoticeCreateRequestBody noticeCreateRequestBody);
-    void voidNotice(NoticeUpdateRequestBody noticeUpdateRequestBody);
-    void activateNotice(NoticeUpdateRequestBody noticeUpdateRequestBody);
+    void voidNotice(int id);
+    void activateNotice(int id);
 
-    List<NoticeBean> findByIsActiveAndExpiryDateAfter();
+    Page<NoticeResponseModel> findByIsActiveAndExpiryDateAfter();
 
     Page<NoticeResponseModel> findAll(int pageSize, int pageNumber);
 }

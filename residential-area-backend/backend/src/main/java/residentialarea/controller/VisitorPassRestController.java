@@ -6,11 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import residentialarea.model.CommonResponseModel;
 import residentialarea.model.CreateVisitorPassRequestModel;
 import residentialarea.model.VisitorPassResponseModel;
 import residentialarea.service.VisitorPassService;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -61,5 +60,29 @@ public class VisitorPassRestController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(visitorPassResponseModels, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/visitor-come-in")
+    @SuppressWarnings("unused")
+    public ResponseEntity<CommonResponseModel> visitorComeIn(@RequestParam("uuid") String uuid) {
+        try {
+            visitorPassService.visitorComeIn(uuid);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/visitor-go-out")
+    @SuppressWarnings("unused")
+    public ResponseEntity<CommonResponseModel> visitorGoOut(@RequestParam("uuid") String uuid) {
+        try {
+            visitorPassService.visitorGoOut(uuid);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 }

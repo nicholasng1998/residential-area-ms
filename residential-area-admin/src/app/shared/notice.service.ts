@@ -32,19 +32,23 @@ export class NoticeService {
     return this.http.get<PageModel<NoticeResponseModel>>('api/protected/notice/read-all', {params});
   }
 
-  completePayment(id: number): Observable<string> {
-    let params = new HttpParams();
-    params = params.append('id', id);
-    return this.http.post<string>('api/protected/payment/complete', {}, {params});
-  }
-
-  rejectPayment(id: number): Observable<string> {
-    let params = new HttpParams();
-    params = params.append('id', id);
-    return this.http.post<string>('api/protected/payment/reject', {}, {params});
-  }
-
   createNotice(requestBody: NoticeCreateRequestBody): Observable<string> {
     return this.http.post<string>('api/protected/notice/create', requestBody);
+  }
+
+  updateNotice(requestBody: NoticeCreateRequestBody): Observable<string> {
+    return this.http.post<string>('api/protected/notice/update', requestBody);
+  }
+
+  deactivate(id: number): Observable<string> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.post<string>('api/protected/notice/deactivate', params);
+  }
+
+  activate(id: number): Observable<string> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.post<string>('api/protected/notice/activate', params);
   }
 }

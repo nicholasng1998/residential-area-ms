@@ -3,6 +3,7 @@ package residentialarea.bean;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -20,6 +21,9 @@ public class StatementBean {
 
     @Column(name = "STATUS")
     private String status;
+
+    @Column(name = "AMOUNT")
+    private BigDecimal amount;
 
     @Column(name = "RESIDENT_ID")
     private int residentId;

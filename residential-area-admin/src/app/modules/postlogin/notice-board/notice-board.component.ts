@@ -16,7 +16,9 @@ export class NoticeBoardComponent implements OnInit {
   pageNumber = 1;
 
   noticeForm: FormGroup;
+  editNoticeForm: FormGroup;
   showModal = false;
+  id = 'id';
   title = 'title';
   content = 'content';
   isActive = 'isActive';
@@ -30,10 +32,18 @@ export class NoticeBoardComponent implements OnInit {
   selectedPreviewContent = '';
 
   selectedEditNotice: NoticeResponseModel = {} as NoticeResponseModel;
-  showEditPreviewModal = false;
+  
+  showEditModal = false;
 
   constructor(private router: Router, private fb: FormBuilder, private noticeService: NoticeService) { 
     this.noticeForm = this.fb.group({
+      [this.title]: [null, [Validators.required]],
+      [this.content]: [null, [Validators.required]],
+      [this.isActive]: [null, [Validators.required]],
+      [this.expiryDate]: [null, [Validators.required]],
+    });
+    this.editNoticeForm = this.fb.group({
+      [this.id]: [null, [Validators.required]],
       [this.title]: [null, [Validators.required]],
       [this.content]: [null, [Validators.required]],
       [this.isActive]: [null, [Validators.required]],
@@ -75,6 +85,15 @@ export class NoticeBoardComponent implements OnInit {
     }); 
   }
 
+  updateNotice(): void {
+    this.noticeService.updateNotice(this.editNoticeForm.value).subscribe(res => {
+      if(res) {
+        this.closeEditModal();
+        this.ngOnInit();
+      }
+    }); 
+  }
+
   changePage(pageNumber: number) {
     this.pageNumber = pageNumber;
     this.ngOnInit();
@@ -92,10 +111,26 @@ export class NoticeBoardComponent implements OnInit {
 
   openEditModal(id: number) {
     this.selectedEditNotice = this.data.filter(d => d.id === id)[0];
-    this.showEditPreviewModal = false;
+    this.showEditModal = true;
   }
 
   deactivate(id: number) {
-    
+    this.noticeService.deactivate(id).subscribe(res => {
+      if(res) {
+        this.ngOnInit();
+      }
+    }); 
+  }
+
+  activate(id: number) {
+    this.noticeService.activate(id).subscribe(res => {
+      if(res) {
+        this.ngOnInit();
+      }
+    }); 
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
   }
 }

@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import residentialarea.bean.NoticeBean;
-import residentialarea.model.EmergencyResponseModel;
-import residentialarea.model.NoticeCreateRequestBody;
-import residentialarea.model.NoticeResponseModel;
-import residentialarea.model.NoticeUpdateRequestBody;
+import residentialarea.model.*;
 import residentialarea.service.NoticeService;
 
 import java.util.ArrayList;
@@ -26,13 +23,13 @@ public class NoticeRestController {
 
     @GetMapping(value = "/read")
     @SuppressWarnings("unused")
-    public ResponseEntity<List<NoticeBean>> findByIsActiveAndExpiryDateAfter() {
+    public ResponseEntity<Page<NoticeResponseModel>> findByIsActiveAndExpiryDateAfter() {
         log.info("/read");
         try {
             return new ResponseEntity<>(noticeService.findByIsActiveAndExpiryDateAfter(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("error: ", e);
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -51,49 +48,49 @@ public class NoticeRestController {
 
     @PostMapping(value = "/create")
     @SuppressWarnings("unused")
-    public ResponseEntity<String> createNotice(@RequestBody NoticeCreateRequestBody noticeCreateRequestBody) {
+    public ResponseEntity<CommonResponseModel> createNotice(@RequestBody NoticeCreateRequestBody noticeCreateRequestBody) {
         try {
             noticeService.createNotice(noticeCreateRequestBody);
         } catch (Exception e) {
             log.error("error: ",  e);
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 
     @PostMapping(value = "/update")
     @SuppressWarnings("unused")
-    public ResponseEntity<String> updateNotice(@RequestBody NoticeUpdateRequestBody noticeUpdateRequestBody) {
+    public ResponseEntity<CommonResponseModel> updateNotice(@RequestBody NoticeUpdateRequestBody noticeUpdateRequestBody) {
         try {
             noticeService.updateNotice(noticeUpdateRequestBody);
         } catch (Exception e) {
             log.error("error: ",  e);
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 
     @PostMapping(value = "/void")
     @SuppressWarnings("unused")
-    public ResponseEntity<String> voidNotice(@RequestBody NoticeUpdateRequestBody noticeUpdateRequestBody) {
+    public ResponseEntity<CommonResponseModel> voidNotice(@RequestParam("id") int id) {
         try {
-            noticeService.voidNotice(noticeUpdateRequestBody);
+            noticeService.voidNotice(id);
         } catch (Exception e) {
             log.error("error: ",  e);
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 
     @PostMapping(value = "/activate")
     @SuppressWarnings("unused")
-    public ResponseEntity<String> activateNotice(@RequestBody NoticeUpdateRequestBody noticeUpdateRequestBody) {
+    public ResponseEntity<CommonResponseModel> activateNotice(@RequestParam("id") int id) {
         try {
-            noticeService.activateNotice(noticeUpdateRequestBody);
+            noticeService.activateNotice(id);
         } catch (Exception e) {
             log.error("error: ",  e);
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 }

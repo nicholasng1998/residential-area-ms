@@ -61,39 +61,41 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void voidNotice(NoticeUpdateRequestBody noticeUpdateRequestBody) {
-        NoticeBean noticeBean = noticeDao.findById(noticeUpdateRequestBody.getId());
+    public void voidNotice(int id) {
+        NoticeBean noticeBean = noticeDao.findById(id);
         if (noticeBean == null) {
             log.info("noticeBean is null");
             return;
         }
-
-        noticeBean.setContent(noticeUpdateRequestBody.getContent());
-        noticeBean.setTitle(noticeUpdateRequestBody.getTitle());
-        noticeBean.setExpiryDate(noticeUpdateRequestBody.getExpiryDate());
         noticeBean.setIsActive("N");
         noticeDao.save(noticeBean);
     }
 
     @Override
-    public void activateNotice(NoticeUpdateRequestBody noticeUpdateRequestBody) {
-        NoticeBean noticeBean = noticeDao.findById(noticeUpdateRequestBody.getId());
+    @Transactional(rollbackFor = Exception.class)
+    public void activateNotice(int id) {
+        NoticeBean noticeBean = noticeDao.findById(id);
         if (noticeBean == null) {
             log.info("noticeBean is null");
             return;
         }
-
-        noticeBean.setContent(noticeUpdateRequestBody.getContent());
-        noticeBean.setTitle(noticeUpdateRequestBody.getTitle());
-        noticeBean.setExpiryDate(noticeUpdateRequestBody.getExpiryDate());
         noticeBean.setIsActive("Y");
         noticeDao.save(noticeBean);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<NoticeBean> findByIsActiveAndExpiryDateAfter() {
-        return noticeDao.findByIsActiveAndExpiryDateAfter("Y", new Date());
+    public Page<NoticeResponseModel> findByIsActiveAndExpiryDateAfter() {
+        log.info("findAll#NoticeResponseModel");
+        Pageable pageable = PageRequest.of(0, 999);
+        List<NoticeBean> noticeBeans = noticeDao.findByIsActiveAndExpiryDateAfter("Y", new Date());
+        List<NoticeResponseModel> noticeResponseModels = new ArrayList<>();
+        noticeBeans.forEach(noticeBean -> {
+            NoticeResponseModel noticeResponseModel = new NoticeResponseModel();
+            BeanUtils.copyProperties(noticeBean, noticeResponseModel);
+            noticeResponseModels.add(noticeResponseModel);
+        });
+        return new PageImpl<>(noticeResponseModels, pageable, noticeDao.findByIsActiveAndExpiryDateAfter("Y", new Date()).size());
     }
 
     @Override
