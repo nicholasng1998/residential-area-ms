@@ -23,7 +23,7 @@ const routes: Routes = [
         component: ResidentAccountComponent
       },
       {
-        path: 'notice-board',
+        path: 'announcement-board',
         component: NoticeBoardComponent
       },
       {
@@ -31,7 +31,7 @@ const routes: Routes = [
         component: PaymentManagementComponent
       },
       {
-        path: 'reporting',
+        path: 'statement',
         component: ReportingComponent
       },
       {
