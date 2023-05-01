@@ -18,10 +18,13 @@ const String VISITOR_PASS_READ_API =
 
 //announcement
 const String NOTICE_REQUEST_BASE = '/protected/notice';
-const String NOTICE_READ_API =
-    baseUrl + NOTICE_REQUEST_BASE + '/read';
+const String NOTICE_READ_API = baseUrl + NOTICE_REQUEST_BASE + '/read';
 
 //statement
 const String STATEMENT_REQUEST_BASE = '/protected/statement';
 const String STATEMENT_READ_API =
     baseUrl + STATEMENT_REQUEST_BASE + '/read-by-username';
+
+//payment
+const String PAYMENT_REQUEST_BASE = '/protected/payment';
+const String PAYMENT_CREATE_API = baseUrl + PAYMENT_REQUEST_BASE + '/create';

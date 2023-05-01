@@ -87,11 +87,11 @@ class _PaymentScreen extends State<PaymentScreen> {
               subtitle: Text("RM" + paymentItem.amount.toString()),
               trailing: ElevatedButton(
                 onPressed: () {
-                  // Redirect to the payment page
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PaymentPage(paymentItem),
+                      builder: (context) =>
+                          PaymentPage(widget.username, paymentItem),
                     ),
                   );
                 },
@@ -106,23 +106,69 @@ class _PaymentScreen extends State<PaymentScreen> {
 }
 
 class PaymentPage extends StatelessWidget {
+  final String username;
   final StatementResponseModel paymentItem;
 
-  PaymentPage(this.paymentItem);
+  Future<bool> create() async {
+    var url = Uri.parse(PAYMENT_CREATE_API);
 
-  void _openWebsite() async {
-    const url = 'http://localhost:4200/payment';
+    Map<String, dynamic> data = {
+      'statementId': paymentItem.id,
+      'username': username,
+      'amount': paymentItem.amount,
+    };
 
-    try {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } catch (e) {
-      print('Error launching URL: $e');
+    String jsonBody = json.encode(data);
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+
+    http.Response response = await http.post(
+      url,
+      headers: headers,
+      body: jsonBody,
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
+
+  void _payNow(BuildContext context) async {
+    bool created = await create();
+    if (created) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Create Successfully'),
+                content: Text('Please Check.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => {Navigator.pop(context)},
+                    child: Text('OK'),
+                  ),
+                ],
+              ));
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Create Failed'),
+                content: Text('Please Try Again.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  ),
+                ],
+              ));
+    }
+  }
+
+  PaymentPage(this.username, this.paymentItem);
 
   @override
   Widget build(BuildContext context) {
@@ -134,11 +180,13 @@ class PaymentPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Payment Item: ${paymentItem.year}'),
+            Text(
+                'Payment For Year: ${paymentItem.year} Month: ${paymentItem.month}'),
             Text('Amount: ${paymentItem.amount}'),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                _openWebsite();
+                _payNow(context);
               },
               child: Text('Pay Now'),
             ),
