@@ -13,6 +13,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 export const NG_ZORRO_MODULES = [
   NzButtonModule,
@@ -30,5 +32,8 @@ export const NG_ZORRO_MODULES = [
   NzDividerModule,
   NzTableModule,
   NzTagModule,
+  NzRadioModule,
+  NzDatePickerModule,
   ReactiveFormsModule,
+
 ]

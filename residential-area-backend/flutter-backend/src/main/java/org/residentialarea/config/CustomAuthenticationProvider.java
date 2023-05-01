@@ -3,7 +3,7 @@ package org.residentialarea.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.residentialarea.feign.ClientCredentialFeignService;
+import org.residentialarea.feign.ResidentCredentialFeignService;
 import org.residentialarea.model.ResidentCredentialModel;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -24,7 +24,7 @@ import java.util.Collections;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final HttpServletRequest httpServletRequest;
-    private final ClientCredentialFeignService clientCredentialFeignService;
+    private final ResidentCredentialFeignService residentCredentialFeignService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -40,7 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         log.info("username: " + username);
         log.info("password: " + pass);
 
-        ResidentCredentialModel residentCredentialModel = clientCredentialFeignService.getClientCredentialModel(username);
+        ResidentCredentialModel residentCredentialModel = residentCredentialFeignService.getResidentCredentialModel(username);
         log.info("clientCredentialModel: " + residentCredentialModel);
         if (residentCredentialModel == null) {
             log.info("Client credential not found.");

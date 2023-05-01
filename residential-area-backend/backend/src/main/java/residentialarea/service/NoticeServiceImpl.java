@@ -2,13 +2,23 @@ package residentialarea.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import residentialarea.bean.EmergencyRequestBean;
 import residentialarea.bean.NoticeBean;
+import residentialarea.bean.ResidentBean;
 import residentialarea.dao.NoticeDao;
+import residentialarea.model.EmergencyResponseModel;
 import residentialarea.model.NoticeCreateRequestBody;
+import residentialarea.model.NoticeResponseModel;
 import residentialarea.model.NoticeUpdateRequestBody;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +38,7 @@ public class NoticeServiceImpl implements NoticeService {
             return;
         }
 
-        noticeBean.setMessage(noticeUpdateRequestBody.getMessage());
+        noticeBean.setContent(noticeUpdateRequestBody.getContent());
         noticeBean.setTitle(noticeUpdateRequestBody.getTitle());
         noticeBean.setExpiryDate(noticeUpdateRequestBody.getExpiryDate());
         noticeBean.setIsActive(noticeUpdateRequestBody.getIsActive() ? "Y" : "N");
@@ -40,7 +50,7 @@ public class NoticeServiceImpl implements NoticeService {
     public void createNotice(NoticeCreateRequestBody noticeCreateRequestBody) {
         log.info("noticeCreateRequestBody: " + noticeCreateRequestBody);
         NoticeBean noticeBean = new NoticeBean();
-        noticeBean.setMessage(noticeCreateRequestBody.getMessage());
+        noticeBean.setContent(noticeCreateRequestBody.getContent());
         noticeBean.setTitle(noticeCreateRequestBody.getTitle());
         noticeBean.setExpiryDate(noticeCreateRequestBody.getExpiryDate());
         noticeBean.setIsActive(noticeCreateRequestBody.getIsActive() ? "Y" : "N");
@@ -58,7 +68,7 @@ public class NoticeServiceImpl implements NoticeService {
             return;
         }
 
-        noticeBean.setMessage(noticeUpdateRequestBody.getMessage());
+        noticeBean.setContent(noticeUpdateRequestBody.getContent());
         noticeBean.setTitle(noticeUpdateRequestBody.getTitle());
         noticeBean.setExpiryDate(noticeUpdateRequestBody.getExpiryDate());
         noticeBean.setIsActive("N");
@@ -73,7 +83,7 @@ public class NoticeServiceImpl implements NoticeService {
             return;
         }
 
-        noticeBean.setMessage(noticeUpdateRequestBody.getMessage());
+        noticeBean.setContent(noticeUpdateRequestBody.getContent());
         noticeBean.setTitle(noticeUpdateRequestBody.getTitle());
         noticeBean.setExpiryDate(noticeUpdateRequestBody.getExpiryDate());
         noticeBean.setIsActive("Y");
@@ -84,5 +94,24 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(readOnly = true)
     public List<NoticeBean> findByIsActiveAndExpiryDateAfter() {
         return noticeDao.findByIsActiveAndExpiryDateAfter("Y", new Date());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<NoticeResponseModel> findAll(int pageSize, int pageNumber) {
+        log.info("findAll#NoticeResponseModel");
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        Page<NoticeBean> noticeBeans = noticeDao.findAll(pageable);
+
+        List<NoticeResponseModel> noticeResponseModels = new ArrayList<>();
+        noticeBeans.forEach(noticeBean -> {
+            NoticeResponseModel noticeResponseModel = new NoticeResponseModel();
+            BeanUtils.copyProperties(noticeBean, noticeResponseModel);
+            if ("Y".equalsIgnoreCase(noticeBean.getIsActive())) {
+                noticeResponseModel.setActive(true);
+            }
+            noticeResponseModels.add(noticeResponseModel);
+        });
+        return new PageImpl<>(noticeResponseModels, pageable, noticeDao.findAll().size());
     }
 }

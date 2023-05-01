@@ -3,173 +3,96 @@
         <button nz-button nzType="primary" class="mb-3" (click)="routeToDashboard()"> Back To Dashboard</button>
         <button nz-button nzType="primary" class="mb-3 position-absolute end-0" (click)="openModal()">Add New Notice</button>
     </div>
-    </div>
-<!-- 
-    <nz-table #basicTable [nzData]="data" [nzFrontPagination]="false">
+
+    <nz-table #basicTable [nzData]="data"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageNumber"
+    (nzPageIndexChange)="changePage($event)"
+    >
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Phone No</th>
-            <th>Unit No</th>
-            <th>Status</th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Active</th>
+            <th>Expiry Date</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.name }}</td>
-            <td>{{ data.age }}</td>
-            <td>{{ data.email }}</td>
-            <td>{{ data.phoneNo }}</td>
-            <td>{{ data.unitNo }}</td>
-            <td>{{ data.status }}</td>
+            <td>{{ data.id }}</td>
+            <td>{{ data.title }}</td>
+            <td><a (click)="preview(data.id)">Click here to preview.</a></td>
+            <td>{{ data.active }}</td>
+            <td>{{ data.expiryDate }}</td>
             <td>
-                <button nz-button nzType="primary" (click)="openEditModal()">Update</button>
+                <button nz-button nzType="primary" (click)="openEditModal(data.id)">Edit</button>
                 <nz-divider nzType="vertical"></nz-divider>
-                <button nz-button nzType="primary" nzDanger (click)="deleteResident(data.id)">Delete</button>
+                <button nz-button nzType="primary" nzDanger (click)="deactivate(data.id)">Deactivate</button>
             </td>
-              <nz-modal [(nzVisible)]="editShowModal" nzOkText="Edit" nzTitle="Edit Resident" (nzOnCancel)="closeEditModal()" (nzOnOk)="editResident()">
-              <ng-container *nzModalContent>
-                  <form nz-form [formGroup]="editResidentForm">
-                    <nz-form-item class="d-none">
-                      <nz-form-control>
-                        <nz-input-group nzPrefixIcon="user">
-                          <input type="text" nz-input [ngModel] = data?.id
-                                  formControlName="id"/>
-                        </nz-input-group>
-                      </nz-form-control>
-                    </nz-form-item>
-
-                      <nz-form-item>
-                        <nz-form-control nzErrorTip="Please input resident name.">
-                          <nz-input-group nzPrefixIcon="user">
-                            <input type="text" nz-input [ngModel] = data?.name
-                                    formControlName="name"
-                                    placeholder="Resident Name"/>
-                          </nz-input-group>
-                        </nz-form-control>
-                      </nz-form-item>
-          
-                      <nz-form-item>
-                        <nz-form-control nzErrorTip="Please input resident age">
-                          <nz-input-group nzPrefixIcon="lock">
-                            <input nz-input formControlName="age" [ngModel] = data?.age
-                                    placeholder="Age"/>
-                          </nz-input-group>
-                        </nz-form-control>
-                      </nz-form-item>
-          
-                      <nz-form-item>
-                          <nz-form-control nzErrorTip="Please input resident email">
-                            <nz-input-group nzPrefixIcon="user">
-                              <input type="text" nz-input [ngModel] = data?.email
-                                      formControlName="email"
-                                      placeholder="Email"/>
-                            </nz-input-group>
-                          </nz-form-control>
-                        </nz-form-item>
-          
-                        <nz-form-item>
-                          <nz-form-control nzErrorTip="Please input resident phone number.">
-                            <nz-input-group nzPrefixIcon="user">
-                              <input type="text" nz-input [ngModel] = data?.phoneNo
-                                      formControlName="phoneNo"
-                                      placeholder="Phone No"/>
-                            </nz-input-group>
-                          </nz-form-control>
-                        </nz-form-item>
-          
-                        <nz-form-item>
-                          <nz-form-control nzErrorTip="Please input resident unit number.">
-                            <nz-input-group nzPrefixIcon="user">
-                              <input type="text" nz-input [ngModel] = data?.unitNo
-                                      formControlName="unitNo"
-                                      placeholder="Unit No"/>
-                            </nz-input-group>
-                          </nz-form-control>
-                        </nz-form-item>
-                    </form>
-              </ng-container>
-            </nz-modal>
           </tr>
         </tbody>
       </nz-table>
 </div>
 
-<nz-modal [(nzVisible)]="showModal" nzOkText="Create" nzTitle="Create Resident" (nzOnCancel)="closeModal()" (nzOnOk)="createResident()">
-    <ng-container *nzModalContent>
-        <form nz-form [formGroup]="createResidentForm">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="Please input resident name.">
-                <nz-input-group nzPrefixIcon="user">
-                  <input type="text" nz-input
-                         formControlName="name"
-                         placeholder="Resident Name"/>
-                </nz-input-group>
-              </nz-form-control>
-            </nz-form-item>
+<nz-modal [(nzVisible)]="showModal" nzTitle="Add New Notice" (nzOnCancel)="closeModal()" (nzOnOk)="createNotice()" nzOkText="Create">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="noticeForm">
+      <p>Notice Title:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input notice title.">
+          <nz-input-group>
+            <input type="text" nz-input
+                   formControlName="title"
+                   placeholder="Notice Title"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
 
-            <nz-form-item>
-              <nz-form-control nzErrorTip="Please input resident age">
-                <nz-input-group nzPrefixIcon="lock">
-                  <input nz-input formControlName="age"
-                         placeholder="Age"/>
-                </nz-input-group>
-              </nz-form-control>
-            </nz-form-item>
+      <p>Notice Content:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input notice content.">
+          <nz-input-group>
+            <textarea
+              nz-input
+              placeholder="Notice Content"
+              [nzAutosize]="{ minRows: 6, maxRows: 999 }"
+              formControlName="content"
+          ></textarea>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
 
-            <nz-form-item>
-                <nz-form-control nzErrorTip="Please input resident email">
-                  <nz-input-group nzPrefixIcon="user">
-                    <input type="text" nz-input
-                           formControlName="email"
-                           placeholder="Email"/>
-                  </nz-input-group>
-                </nz-form-control>
-              </nz-form-item>
+      <p>Activation:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select activation.">
+          <nz-input-group>
+            <nz-radio-group [(ngModel)]="activationValue" formControlName="isActive">
+              <label nz-radio [nzValue]="true">Activate</label>
+              <label nz-radio [nzValue]="false">Inactivate</label>
+            </nz-radio-group>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
 
-              <nz-form-item>
-                <nz-form-control nzErrorTip="Please input resident phone number.">
-                  <nz-input-group nzPrefixIcon="user">
-                    <input type="text" nz-input
-                           formControlName="phoneNo"
-                           placeholder="Phone No"/>
-                  </nz-input-group>
-                </nz-form-control>
-              </nz-form-item>
+      <p>Expiry Date:</p>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select expiry date.">
+          <nz-input-group>
+            <nz-date-picker [(ngModel)]="expiryDateValue" (ngModelChange)="onChange($event)"
+            formControlName="expiryDate"></nz-date-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
 
-              <nz-form-item>
-                <nz-form-control nzErrorTip="Please input resident unit number.">
-                  <nz-input-group nzPrefixIcon="user">
-                    <input type="text" nz-input
-                           formControlName="unitNo"
-                           placeholder="Unit No"/>
-                  </nz-input-group>
-                </nz-form-control>
-              </nz-form-item>
-
-              <nz-form-item>
-                <nz-form-control nzErrorTip="Please input resident username.">
-                  <nz-input-group nzPrefixIcon="user">
-                    <input type="text" nz-input
-                           formControlName="username"
-                           placeholder="Username"/>
-                  </nz-input-group>
-                </nz-form-control>
-              </nz-form-item>
-
-              <nz-form-item>
-                <nz-form-control nzErrorTip="Please input resident password.">
-                  <nz-input-group nzPrefixIcon="lock">
-                    <input type="text" nz-input
-                           formControlName="password"
-                           placeholder="Password"/>
-                  </nz-input-group>
-                </nz-form-control>
-              </nz-form-item>
-          </form>
-    </ng-container>
-  </nz-modal>
-   -->
+<nz-modal [(nzVisible)]="showPreviewModal" nzTitle="Preview" (nzOnCancel)="closePreviewModal()" (nzOnOk)="closePreviewModal()">
+  <ng-container *nzModalContent>
+    <div [innerHTML]="selectedPreviewContent"></div>
+  </ng-container>
+</nz-modal>

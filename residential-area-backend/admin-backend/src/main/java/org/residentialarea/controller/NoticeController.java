@@ -3,15 +3,10 @@ package org.residentialarea.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.residentialarea.feign.NoticeFeignService;
-import org.residentialarea.model.NoticeCreateRequestBody;
-import org.residentialarea.model.NoticeModel;
-import org.residentialarea.model.NoticeUpdateRequestBody;
+import org.residentialarea.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +27,7 @@ public class NoticeController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @SuppressWarnings("unused")
     public ResponseEntity<String> createNotice(@RequestBody NoticeCreateRequestBody noticeCreateRequestBody) {
+        log.info("noticeCreateRequestBody: " + noticeCreateRequestBody);
         return new ResponseEntity<>(noticeFeignService.createNotice(noticeCreateRequestBody), HttpStatus.OK);
     }
 
@@ -39,5 +35,12 @@ public class NoticeController {
     @SuppressWarnings("unused")
     public ResponseEntity<String> updateNotice(@RequestBody NoticeUpdateRequestBody noticeUpdateRequestBody) {
         return new ResponseEntity<>(noticeFeignService.updateNotice(noticeUpdateRequestBody), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/read-all", method = RequestMethod.GET)
+    @SuppressWarnings("unused")
+    public ResponseEntity<PageModel<NoticeResponseModel>> readAllNotice(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                                        @RequestParam(defaultValue = "1") Integer pageNumber) {
+        return new ResponseEntity<>(noticeFeignService.findAllNotice(pageSize, pageNumber), HttpStatus.OK);
     }
 }

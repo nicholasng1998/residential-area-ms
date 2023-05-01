@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "CLIENT-CREDENTIAL", url = "http://localhost:8081", path = "/v1/client-credential")
-public interface ClientCredentialFeignService {
+@FeignClient(name = "RESIDENT-CREDENTIAL", url = "http://localhost:8081", path = "/v1/resident-credential")
+public interface ResidentCredentialFeignService {
 
     @GetMapping(value = "/get")
-    ResidentCredentialModel getClientCredentialModel(@RequestParam String username);
+    ResidentCredentialModel getResidentCredentialModel(@RequestParam String username);
 
     @PostMapping(value = "/create")
-    String createClientCredential(@RequestBody CreateResidentCredentialRequestBody requestBody);
+    String createResidentCredential(@RequestBody CreateResidentCredentialRequestBody requestBody);
 }

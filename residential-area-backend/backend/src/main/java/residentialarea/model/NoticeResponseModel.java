@@ -5,9 +5,10 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class NoticeCreateRequestBody {
+public class NoticeResponseModel {
+    private int id;
     private String title;
     private String content;
-    private Boolean isActive;
+    private boolean isActive;
     private Date expiryDate;
 }

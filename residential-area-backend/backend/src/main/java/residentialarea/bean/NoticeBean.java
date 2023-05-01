@@ -17,8 +17,8 @@ public class NoticeBean {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "MESSAGE")
-    private String message;
+    @Column(name = "CONTENT")
+    private String content;
 
     @Column(name = "IS_ACTIVE")
     private String isActive;

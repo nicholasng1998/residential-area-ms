@@ -2,11 +2,14 @@ package residentialarea.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import residentialarea.bean.NoticeBean;
+import residentialarea.model.EmergencyResponseModel;
 import residentialarea.model.NoticeCreateRequestBody;
+import residentialarea.model.NoticeResponseModel;
 import residentialarea.model.NoticeUpdateRequestBody;
 import residentialarea.service.NoticeService;
 
@@ -30,6 +33,19 @@ public class NoticeRestController {
         } catch (Exception e) {
             log.error("error: ", e);
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/read-all")
+    @SuppressWarnings("unused")
+    public ResponseEntity<Page<NoticeResponseModel>> findAll(@RequestParam(defaultValue = "10") Integer pageSize,
+                                                             @RequestParam(defaultValue = "1") Integer pageNumber) {
+        log.info("/read");
+        try {
+            return new ResponseEntity<>(noticeService.findAll(pageSize, pageNumber), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

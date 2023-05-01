@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class NoticeCreateRequestBody {
     private String title;
-    private String message;
+    private String content;
     private Boolean isActive;
     private Date expiryDate;
 }

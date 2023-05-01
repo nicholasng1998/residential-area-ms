@@ -1,11 +1,10 @@
 package org.residentialarea.feign;
 
-import org.residentialarea.model.NoticeCreateRequestBody;
-import org.residentialarea.model.NoticeModel;
-import org.residentialarea.model.NoticeUpdateRequestBody;
+import org.residentialarea.model.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,4 +18,7 @@ public interface NoticeFeignService {
 
     @GetMapping(value = "/update")
     String updateNotice(@RequestBody NoticeUpdateRequestBody noticeCreateRequestBody);
+
+    @GetMapping(value = "/read-all")
+    PageModel<NoticeResponseModel> findAllNotice(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber);
 }
