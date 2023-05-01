@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import residentialarea.model.CommonResponseModel;
+import residentialarea.model.EmergencyRequestCreateRequestBody;
 import residentialarea.model.EmergencyResponseModel;
 import residentialarea.service.EmergencyRequestService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -58,5 +56,30 @@ public class EmergencyRequestRestController {
             return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create")
+    @SuppressWarnings("unused")
+    public ResponseEntity<CommonResponseModel> createEmergencyRequest(@RequestBody EmergencyRequestCreateRequestBody requestCreateRequestBody) {
+        log.info("/create");
+        try {
+            emergencyRequestService.create(requestCreateRequestBody);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/read-by-username")
+    @SuppressWarnings("unused")
+    public ResponseEntity<Page<EmergencyResponseModel>> findAllEmergencyRequestByUsername(@RequestParam("username") String username) {
+        log.info("/read-by-username");
+        try {
+            return new ResponseEntity<>(emergencyRequestService.findAllEmergencyRequestByUsername(username), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 }

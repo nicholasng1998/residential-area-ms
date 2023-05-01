@@ -3,8 +3,8 @@ package residentialarea.constant;
 import lombok.Getter;
 
 public enum EmergencyRequestStatusEnum {
-    ACTIVE("Active"),
-    PENDING("Pending"),
+    ACTIVE("ACTIVE"),
+    PENDING("PENDING"),
     RESOLVED("RESOLVED"),
     REJECTED("REJECTED");
 
