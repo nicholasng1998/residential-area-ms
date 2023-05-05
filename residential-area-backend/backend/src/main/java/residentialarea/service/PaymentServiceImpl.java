@@ -68,14 +68,13 @@ public class PaymentServiceImpl implements PaymentService{
     public void create(CreatePaymentRequestModel createPaymentRequestModel) {
         PaymentBean paymentBean = new PaymentBean();
         paymentBean.setAmount(createPaymentRequestModel.getAmount());
-        paymentBean.setMethod("FPX");
-
+        paymentBean.setMethod(createPaymentRequestModel.getMethod());
         ResidentCredentialBean residentCredentialBean = residentCredentialDao.findByUsername(createPaymentRequestModel.getUsername());
         ResidentBean residentBean = residentDao.getOne(residentCredentialBean.getResidentId());
         StatementBean statementBean = statementDao.getOne(createPaymentRequestModel.getStatementId());
         paymentBean.setReference(String.format("%s%s_%s", statementBean.getYear(), statementBean.getMonth(), residentBean.getId()));
         paymentBean.setStatus(PaymentStatusEnum.PENDING.getStatus());
         paymentBean.setStatementId(statementBean.getId());
-        paymentDao.save(paymentBean);
+        paymentDao.save(paymentBean);   
     }
 }

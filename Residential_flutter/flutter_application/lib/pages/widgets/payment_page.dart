@@ -105,17 +105,25 @@ class _PaymentScreen extends State<PaymentScreen> {
   }
 }
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
   final String username;
   final StatementResponseModel paymentItem;
+  PaymentPage(this.username, this.paymentItem);
+  @override
+  _PaymentPage createState() => _PaymentPage();
+}
+
+class _PaymentPage extends State<PaymentPage> {
+  String? selectedValue;
 
   Future<bool> create() async {
     var url = Uri.parse(PAYMENT_CREATE_API);
 
     Map<String, dynamic> data = {
-      'statementId': paymentItem.id,
-      'username': username,
-      'amount': paymentItem.amount,
+      'statementId': widget.paymentItem.id,
+      'username': widget.username,
+      'amount': widget.paymentItem.amount,
+      'method': selectedValue
     };
 
     String jsonBody = json.encode(data);
@@ -168,8 +176,6 @@ class PaymentPage extends StatelessWidget {
     }
   }
 
-  PaymentPage(this.username, this.paymentItem);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,22 +183,71 @@ class PaymentPage extends StatelessWidget {
         title: Text('Payment Details'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-                'Payment For Year: ${paymentItem.year} Month: ${paymentItem.month}'),
-            Text('Amount: ${paymentItem.amount}'),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                _payNow(context);
-              },
-              child: Text('Pay Now'),
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                  'Payment For Year: ${widget.paymentItem.year} Month: ${widget.paymentItem.month}'),
+              Text('Amount: ${widget.paymentItem.amount}'),
+              SizedBox(height: 16.0),
+              DropdownButton<String>(
+                value: selectedValue,
+                hint: Text('Select payment method'),
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedValue = newValue as String;
+                  });
+                },
+                items: [
+                  DropdownMenuItem(
+                    value: 'fpx',
+                    child: Text('FPX'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'touchNGo',
+                    child: Text('Touch n Go'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'creditCard',
+                    child: Text('Credit Card'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  _payNow(context);
+                },
+                child: Text('Pay Now'),
+              ),
+            ],
+          ),
         ),
       ),
     );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Payment Details'),
+    //   ),
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         Text(
+    //             'Payment For Year: ${paymentItem.year} Month: ${paymentItem.month}'),
+    //         Text('Amount: ${paymentItem.amount}'),
+    //         SizedBox(height: 16.0),
+    //         ElevatedButton(
+    //           onPressed: () {
+    //             _payNow(context);
+    //           },
+    //           child: Text('Pay Now'),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
