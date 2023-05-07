@@ -43,7 +43,7 @@ export class PaymentManagementComponent implements OnInit {
   }  
 
   reject(id: number) {
-    this.paymentService.completePayment(id).subscribe((res) => {
+    this.paymentService.rejectPayment(id).subscribe((res) => {
       this.ngOnInit();
     });
   }

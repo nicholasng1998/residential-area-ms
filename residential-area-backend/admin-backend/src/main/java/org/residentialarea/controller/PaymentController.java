@@ -26,7 +26,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentFeignService.readPayment(pageSize, pageNumber), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/resolve", method = RequestMethod.POST)
+    @RequestMapping(value = "/complete", method = RequestMethod.POST)
     @SuppressWarnings("unused")
     public ResponseEntity<CommonResponseModel> completePayment(@RequestParam Integer id) {
         return new ResponseEntity<>(paymentFeignService.completePayment(id), HttpStatus.OK);
